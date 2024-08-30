@@ -1,12 +1,12 @@
 /* Enter your custom styles here */
-.person{
+/* .person{
     margin-top: 30% !important;
 }
 .header {
  
   background-image: linear-gradient(145deg,#fbe0b6, #fea555,   #fbe0b6);
 }
-/* page background */
+
 .pages {
  
     background-image: linear-gradient(145deg, #fea555,   #fbe0b6, #ee833f);
@@ -54,16 +54,13 @@
   background-image: url("https://noted.lol/content/images/2022/06/scan-qr-code-gif.gif");
   margin-top: 70%;
 }
-/* #__panel0-content1 sapMPanelBGTranslucent {
- background-color: transparent !important;
-} */
  
 .sapMPanelBGTranslucent {
   background-color: transparent;
 }
 #__vbox1{
   background-color: transparent;
-}
+} */
 .boxContainer {
   border-radius: 10px; /* Rounded corners */
   padding-left: 2rem; /* Inner spacing */

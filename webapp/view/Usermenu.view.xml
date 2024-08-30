@@ -75,7 +75,7 @@
                     class="nav"
             >
                 <tnt:NavigationList
-                    items="{path: '/navigation'}"
+                    items="{path: '/navigation', templateShareable: true}"
                     id="idNavigationList"
                         class="nav"
                 >
@@ -100,7 +100,7 @@
                 <tnt:fixedItem>
                     <tnt:NavigationList
                         id="idNavigationList3"
-                        items="{path: '/fixedNavigation'}"
+                        items="{path: '/fixedNavigation',templateShareable: true}"
                            class="nav"
                     >
                         <tnt:NavigationListItem

@@ -2,9 +2,10 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/Device",
     "sap/m/MessageBox",
+    "sap/m/MessageToast",
     'sap/ui/core/SeparatorItem',
 ],
-    function (Controller, Device, MessageBox, SeparatorItem) {
+    function (Controller, Device, MessageBox, SeparatorItem,MessageToast) {
         "use strict";
 
         return Controller.extend("com.app.rfscreens.controller.Home", {
@@ -16,9 +17,6 @@ sap.ui.define([
                     this.ologinDialog.close()
                 }
             },
-            // onResourceLoginBtnPress: function () {
-            //     this.getRouter().navTo("RouteUsermenu")
-            // },
             onPressSignupBtn: async function () {
                 if (!this.oActiveLoansDialog) {
                     this.oActiveLoansDialog = await this.loadFragment("SignUpDetails")
@@ -43,8 +41,7 @@ sap.ui.define([
                 var oView = this.getView();
                 oView.byId("idEmployeeIDInput").setValue("");
                 oView.byId("idResourceNameInput").setValue("");
-                oView.byId("idCreatePasswordInput").setValue("");
-                oView.byId("idInputuserType").setValue("");
+                oView.byId("idInputEmail").setValue("");
                 oView.byId("idInputPhoneNumber").setValue("");
 
                 // Unselect checkboxes
@@ -53,51 +50,56 @@ sap.ui.define([
                 // Clear the selected keys from GroupSelect MultiComboBox
                 oView.byId("GroupSelect").setSelectedKeys([]);
 
-                // Reset other controls if necessary
-                oView.byId("idAreaInboundCheckBox").setSelected(false);
-                oView.byId("idAreaOutboundCheckBox").setSelected(false);
-                oView.byId("idAreaInternalCheckBox").setSelected(false);
+                var oMultiComboBox = this.byId("checkboxContainer");
+
+                // Clear all selected items
+               oMultiComboBox.setSelectedKeys([]);
             },
-            /**Based on Selected key DropDown Should be visible */
-            onCheckBoxSelect: function () {
-                // Get the checkbox states
-                var isInboundSelected = this.byId("inboundCheckBox").getSelected();
-                var isOutboundSelected = this.byId("outboundCheckBox").getSelected();
-                var isInternalSelected = this.byId("internalCheckBox").getSelected();
-
-                // Create a filter array to hold the selected filters
-                var filters = [];
-
-                if (isInboundSelected) {
-                    filters.push(new sap.ui.model.Filter("Area", sap.ui.model.FilterOperator.EQ, "Inbound"));
-                }
-                if (isOutboundSelected) {
-                    filters.push(new sap.ui.model.Filter("Area", sap.ui.model.FilterOperator.EQ, "Outbound"));
-                }
-                if (isInternalSelected) {
-                    filters.push(new sap.ui.model.Filter("Area", sap.ui.model.FilterOperator.EQ, "Internal"));
-                }
-
-                // Get the Select control and bind it with the filtered data
-                var oMultiComboBox = this.byId("GroupSelect");
-                var oModel = this.getView().getModel();
-
-                // Create the binding
-                oMultiComboBox.bindAggregation("items", {
-                    path: "/RFUISet",
-                    template: new sap.ui.core.Item({
-                        key: "{Resourcegroup}",
-                        text: "{Resourcegroup}"
-                    }),
-                    filters: filters,
-                    sorter: {
-                        path: "Area",
-                        group: true
-                    },
-                    groupHeaderFactory: this.getGroupHeader.bind(this)
-                });
-            },
-            /**Getting Signup form Details*/
+         onCheckBoxSelect: function () {
+            // Get the MultiComboBox instance for the Process Area
+            var oMultiComboBox = this.byId("checkboxContainer");
+        
+            // Retrieve the selected items
+            var aSelectedItems = oMultiComboBox.getSelectedItems();
+        
+            // Initialize an array to hold the filters
+            var aFilters = [];
+        
+            // Iterate over the selected items to add corresponding filters
+            aSelectedItems.forEach(function(oItem) {
+                var sKey = oItem.getText(); // Get the key (e.g., "Inbound", "Outbound", "Internal")
+        
+                // Add filter for the selected process area
+                aFilters.push(new sap.ui.model.Filter("Processarea", sap.ui.model.FilterOperator.EQ, sKey)); 
+            });
+        
+            // Combine the filters with an OR condition
+            var oCombinedFilter = new sap.ui.model.Filter({
+                filters: aFilters,
+                and: false
+            });
+        
+            // Get the Group MultiComboBox and apply the filters
+            var oGroupMultiComboBox = this.byId("GroupSelect");
+        
+            // Bind the aggregation with the new filters
+            oGroupMultiComboBox.bindAggregation("items", {
+                path: "/AreaSet",
+                template: new sap.ui.core.Item({
+                    key: "{Processgroup}",
+                    text: "{Processgroup}"
+                }),
+                filters: oCombinedFilter,
+                sorter: {
+                    path: "Processarea",
+                    group: true
+                },
+                groupHeaderFactory: this.getGroupHeader
+            });
+        
+            // Make sure the Group MultiComboBox is visible
+            oGroupMultiComboBox.setVisible(true);
+        },                  
             onSubmitPress: function () {
 
                 const oUserView = this.getView();
@@ -109,30 +111,17 @@ sap.ui.define([
                 var sPhone = this.byId("idInputPhoneNumber").getValue();
                 var oEmail = this.byId("idInputEmail").getValue();
 
-                // Get the selected checkboxes
-                var oArea = this.getSelectedArea();
+                var oMultiComboBox = this.byId("checkboxContainer");
+                // Retrieve the selected items
+                var aSelectedItems = oMultiComboBox.getSelectedItems();
+                var aSelectedValues = aSelectedItems.map(function(oItem) {
+                    return oItem.getText(); // Use oItem.getKey() if you need the key instead of the text
+                });
+                var sSelectedAreas = aSelectedValues.join(","); 
+
                 // Get the selected groups from the MultiComboBox
                 var oItem = this.byId("GroupSelect").getSelectedKeys();
                 var resourceGroup = oItem.join(", ");
-
-
-                /**generating Password */
-                function generatePassword() {
-                    const regex = /[A-Za-z@!#$%&]/;
-                    const passwordLength = 8;
-                    let password = "";
-
-                    for (let i = 0; i < passwordLength; i++) {
-                        let char = '';
-                        while (!char.match(regex)) {
-                            char = String.fromCharCode(Math.floor(Math.random() * 94) + 33);
-                        }
-                        password += char;
-                    }
-
-                    return password;
-                }
-                var oPassword = generatePassword();
 
                 var bValid = true;
                 var bAllFieldsFilled = true;
@@ -206,11 +195,11 @@ sap.ui.define([
                     Validity: false,
                     Resourcename: sResourceName,
                     Resouecetype: oSelectedItem.getKey(), // assuming getKey() gives the value you need
-                    Area: oArea,
+                    Area: sSelectedAreas,
                     Email: oEmail,
                     Phonenumber: sPhone,
                     Resourcegroup: resourceGroup,
-                    Password :oPassword
+                    Status :"true"
                 }, {
                     success: function (oData) {
                         sap.m.MessageToast.show("your details are sent to supervisior please wait until you get the approval");
@@ -222,8 +211,7 @@ sap.ui.define([
                 })
                 oUserView.byId("idEmployeeIDInput").setValue("");
                 oUserView.byId("idResourceNameInput").setValue("");
-                oUserView.byId("idCreatePasswordInput").setValue("");
-                oUserView.byId("idInputuserType").setValue("");
+                oUserView.byId("idInputEmail").setValue("");
                 oUserView.byId("idInputPhoneNumber").setValue("");
 
                 // Unselect checkboxes
@@ -232,28 +220,10 @@ sap.ui.define([
                 // Clear the selected keys from GroupSelect MultiComboBox
                 oUserView.byId("GroupSelect").setSelectedKeys([]);
 
-                // Reset other controls if necessary
-                oUserView.byId("idAreaInboundCheckBox").setSelected(false);
-                oUserView.byId("idAreaOutboundCheckBox").setSelected(false);
-                oUserView.byId("idAreaInternalCheckBox").setSelected(false);
-            },
-            getGroupHeader: function (oGroup) {
-                return new SeparatorItem({
-                    text: oGroup.key
-                });
-            },
+                var oMultiComboBox = this.byId("checkboxContainer");
 
-            getSelectedArea: function () {
-                // Helper method to get selected areas from checkboxes
-                var sSelectedArea = null;
-                if (this.byId("inboundCheckBox").getSelected()) {
-                    sSelectedArea = 'Inbound';
-                } else if (this.byId("outboundCheckBox").getSelected()) {
-                    sSelectedArea = 'Outbound';
-                } else if (this.byId("internalCheckBox").getSelected()) {
-                    sSelectedArea = 'Internal';
-                }
-                return sSelectedArea;
+                // Clear all selected items
+               oMultiComboBox.setSelectedKeys([]);
             },
             onResourceLoginBtnPress: async function () {
                 var oView = this.getView();
@@ -265,19 +235,19 @@ sap.ui.define([
 
                 // Perform validation checks
                 if (!sWarehouseNumber) {
-                    MessageToast.show("Please enter the Warehouse Number.");
+                    sap.m.MessageToast.show("Please enter the Warehouse Number.");
                     return;
                 }
                 if (!sResourceId) {
-                    MessageToast.show("Please enter the Resource ID.");
+                    sap.m.MessageToast.show("Please enter the Resource ID.");
                     return;
                 }
                 if (!sPassword) {
-                    MessageToast.show("Please enter the Password.");
+                    sap.m.MessageToast.show("Please enter the Password.");
                     return;
                 }
                 if (!(sWarehouseNumber && sResourceId && sPassword)) {
-                    MessageToast.show("Please enter all the details");
+                    sap.m.MessageToast.show("Please enter all the details");
                     return;
                 }
 
@@ -300,18 +270,6 @@ sap.ui.define([
                     MessageToast.show("An error occurred while checking the user.");
                 }
             },
-
-
-            onClearPress: function () {
-                var oView = this.getView();
-                oView.byId("idwhInput").setValue("");
-                oView.byId("IdResourceInput").setValue("");
-                oView.byId("Idpassword").setValue("");
-            },
-
-            handleLinkPress: function () {
-                // Implement the forgot password link logic here
-            }
 
         });
     });

@@ -6,15 +6,13 @@
 >
     <Page
         id="page"
-        title="{i18n>title}"
-        class="Page"
+        title="{i18n>title}"  
     >
         <content>
             <FlexBox
                 id="_IDGenFlexBoxMain"
                 justifyContent="Center"
                 alignItems="Center"
-                class="pages"
                 height="100%"
                 direction="Row"
             >
@@ -90,7 +88,7 @@
                             <!-- Spacer for gap between buttons -->
                             <Button
                                 id="Signupbtn"
-                                text="Sign Up"
+                                text="Register!"
                                 type="Default"
                                 press="onPressSignupBtn"
                             />

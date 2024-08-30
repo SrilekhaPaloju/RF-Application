@@ -92,9 +92,7 @@
                     text="Resource Type"
                     required="true"
                 />
-                 <ComboBox
-                    id="idRoesurcetypeInput"
-                >
+                <ComboBox id="idRoesurcetypeInput">
                     <core:Item
                         id="_IDGenItemPermanentEmployee"
                         key="PermanentEmployee"
@@ -106,7 +104,6 @@
                         key="temporaryemployee"
                         text="temporary Employee"
                     />
-
                 </ComboBox>
                 <Label
                     id="idLabelName"
@@ -114,7 +111,30 @@
                     required="true"
                 />
 
-                <HBox
+                <MultiComboBox id="checkboxContainer" selectionChange="onCheckBoxSelect">
+                    <core:Item
+                        class="dropdown"
+                        id="inboundCheckBox"
+                        key=""
+                        text="Inbound"
+        
+                    />
+                    <core:Item
+                        class="dropdown"
+                        id="outboundCheckBox"
+                        key=""
+                        text="Outbound"
+            
+                    />
+                    <core:Item
+                        class="dropdown"
+                        id="internalCheckBox"
+                        key=""
+                        text="Internal"
+                 
+                    />
+                </MultiComboBox>
+                <!-- <HBox
                     id="checkboxContainer"
                     width="100%"
                 >
@@ -135,7 +155,7 @@
                         text="Internal"
                         select="onCheckBoxSelect"
                     />
-                </HBox>
+                </HBox> -->
                 <Label
                     id="idLableGroup"
                     text="Group"
@@ -143,16 +163,14 @@
                 />
                 <MultiComboBox
                     id="GroupSelect"
-                    items="{path: '/RFUISet',	sorter: {
-					path: 'Area',
-					group: true
-				}, groupHeaderFactory: '.getGroupHeader'}"
+                    items="{path: '/AreaSet'}"
+                    visible="false"
                 >
                     <core:Item
                         class="dropdown"
                         id="_IDGenItem4"
-                        key="{Resourcegroup}"
-                        text="{Resourcegroup}"
+                        key="{Processgroup}"
+                        text="{Processgroup}"
                     />
                 </MultiComboBox>
                 <Label
