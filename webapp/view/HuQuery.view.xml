@@ -1,0 +1,561 @@
+<mvc:View
+    controllerName="com.app.rfscreens.controller.HuQuery"
+    xmlns:unified="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:ndc="sap.ndc"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    xmlns:vbm="sap.ui.vbm"
+    xmlns:controls="sap.viz.ui5.controls"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:simple="sap.gantt.simple"
+    xmlns:launchpad="sap.ushell.ui.launchpad"
+    xmlns:uxap="sap.uxap"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+    displayBlock="true"
+    xmlns:tnt="sap.tnt"
+>
+    <Page
+        id="_IDGenPage1"
+        showHeader="false"
+        class="PageBackground"
+    >
+        <tnt:ToolHeader
+            id="shellLikeToolHeader"
+            visible="true"
+        >
+            <Title
+                text="RFUI"
+                wrapping="false"
+                id="productName"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData1"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Title>
+
+            <Text
+                text="By Artihcus Global"
+                wrapping="false"
+                id="secondTitle"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData2"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Text>
+
+            <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+
+            <ToolbarSpacer id="spacer">
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData3"
+                        priority="Low"
+                        group="1"
+                    />
+                </layoutData>
+            </ToolbarSpacer>
+
+            <ToolbarSeparator id="_IDGenToolbarSeparator1">
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData4"
+                        group="2"
+                    />
+                </layoutData>
+            </ToolbarSeparator>
+
+            <tnt:ToolHeaderUtilitySeparator
+                id="_IDGenToolHeaderUtilitySeparator1"
+            />
+
+            <ToolbarSpacer
+                id="_IDGenToolbarSpacer2"
+                width="1.125rem"
+            />
+
+            <Avatar
+                id="myAvatar"
+                src="test-resources/sap/tnt/images/Woman_avatar_01.png"
+                displaySize="XS"
+                press="onAvatarPressed"
+                tooltip="Profile"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData5"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Avatar>
+        </tnt:ToolHeader>
+
+        <content>
+            <Button
+                id="_IDGenButton1122"
+                icon="sap-icon://nav-back"
+                press="Onpressback1"
+                visible="false"
+            />
+            <Button
+                id="_IDGenButton1111"
+                icon="sap-icon://nav-back"
+                press="Onpressback2"
+                visible="false"
+            />
+            <Button
+                id="_IDGenButton1133"
+                icon="sap-icon://nav-back"
+                press="Onpressback3"
+                visible="false"
+            />
+
+            <IconTabBar
+                expanded="true"
+                id="IconTabBar"
+            >
+                <items>
+                    <IconTabFilter
+                        id="icon1"
+                        visible="true"
+                        key="info"
+                        text="Scanning HU"
+                    >
+                        <VBox
+                            id="_IDGenVBox1"
+                            alignItems="Center"
+                            justifyContent="Center"
+                            class="centerContent"
+                        >
+                            <f:SimpleForm
+                                id="simpleForm"
+                                layout="ResponsiveGridLayout"
+                                editable="true"
+                                class="sapUiResponsiveMargin"
+                                labelSpanL="3"
+                                labelSpanM="3"
+                                emptySpanL="4"
+                                emptySpanM="4"
+                                columnsL="1"
+                                columnsM="1"
+                            >
+                                <HBox
+                                    id="_IDGenHBoxContainer"
+                                    justifyContent="Start"
+                                    alignItems="Center"
+                                >
+                                    <HBox
+                                        id="_IDGenHBoxContainer1"
+                                        alignItems="Center"
+                                        justifyContent="SpaceBetween"
+                                        class="sapUiSmallMarginBottom"
+                                    >
+                                        <!-- Scan HU Label -->
+                                        <Label
+                                            id="_IDGenLabel1"
+                                            text="Scan HU:"
+                                            class="sapUiTinyMarginEnd"
+                                            
+                                        />
+                                        <!-- Input Field -->
+                                        <Input
+                                            id="_IDGenInput1"
+                                            placeholder="Enter HU..."
+                                            class="sapUiTinyMarginBegin"
+                                            width="12rem"
+                                        />
+                                        <!-- Barcode Scanner Button -->
+                                        <ndc:BarcodeScannerButton
+                                            id="sampleBarcodeScannerButtonZebraOne"
+                                            scanSuccess="onScanSuccessOne"
+                                            scanFail="onScanErrorOne"
+                                            inputLiveUpdate="onScanLiveUpdate"
+                                            dialogTitle="Enter HU Number"
+                                            class="sapUiTinyMarginBegin"
+                                        />
+                        
+                                        <Button
+                                            id="_IDGenButton111"
+                                            text="Submit"
+                                            press="Onpresssubmit"
+                                            class="sapUiSmallMarginBegin"
+                                            type="Emphasized"
+                                        />
+                                             </HBox>
+                                </HBox>
+                            </f:SimpleForm>
+                        </VBox>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="icon2"
+                        visible="false"
+                        key="info1"
+                        text="HU Details"
+                    >
+                        <f:SimpleForm
+                            id="simpleForm1"
+                            layout="ResponsiveGridLayout"
+                            editable="true"
+                            columnsL="2"
+                            columnsM="1"
+                        >
+                            <!-- HU Number Field -->
+                            <Label
+                                id="_IDGenLabel2"
+                                text="HU"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Input
+                                id="_IDGenInput2"
+                                placeholder="HU Number..."
+                                maxLength="30"
+                                width="250px"
+                            />
+
+                            <!-- HU Type Field -->
+                            <Label
+                                id="_IDGenLabel3"
+                                text="HU Type"
+                            />
+                            <Input
+                                id="_IDGenInput3"
+                                placeholder="Enter HU Type..."
+                                maxLength="25"
+                                width="200px"
+                            />
+
+                            <!-- Dimensions Group: Length, Width, Height -->
+                            <Label
+                                id="_IDGenLabelDimensions"
+                                text="Dimensions (L x W x H)"
+                                class="sapUiMarginTop margin"
+                            />
+                            <HBox
+                                id="_IDGenHBoxDimensions"
+                                justifyContent="Start"
+                                class="gapBetweenInputs"
+                            >
+                                <!-- Length Input -->
+                                <VBox id="_IDGenVBox2">
+                                    <Label
+                                        id="_IDGenLabel8"
+                                        text="Length"
+                                    />
+                                    <Input
+                                        id="_IDGenInputLength"
+                                        placeholder="Enter Length..."
+                                        maxLength="3"
+                                        width="80px"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </VBox>
+                                <!-- Width Input -->
+                                <VBox id="_IDGenVBox3">
+                                    <Label
+                                        id="_IDGenLabel9"
+                                        text="Width"
+                                    />
+                                    <Input
+                                        id="_IDGenInputWidth"
+                                        placeholder="Enter Width..."
+                                        maxLength="3"
+                                        width="80px"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </VBox>
+                                <!-- Height Input -->
+                                <VBox id="_IDGenVBox4">
+                                    <Label
+                                        id="_IDGenLabel10"
+                                        text="Height"
+                                    />
+                                    <Input
+                                        id="_IDGenInputHeight"
+                                        placeholder="Enter Height..."
+                                        maxLength="3"
+                                        width="80px"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </VBox>
+
+                                <!-- Height Mesurements -->
+                                <VBox id="_IDGenVBox5">
+                                    <Label
+                                        id="_IDGenLabel11"
+                                        text=""
+                                    />
+                                    <Input
+                                        id="_IDGenInputMesurement"
+                                        placeholder=""
+                                        maxLength="13.3"
+                                        width="40px"
+                                    />
+                                </VBox>
+                            </HBox>
+                            <!-- Weights Group: Tare Weight, Net Weight, Gross Weight -->
+                            <Label
+                                id="_IDGenLabelWeights"
+                                text="Weights (Tare, Net, Gross)"
+                                class="margin"
+                            />
+
+                            <HBox
+                                id="_IDGenHBoxWeights"
+                                justifyContent="Start"
+                                class="gapBetweenInputs"
+                            >
+                                <!-- Tare Weight Input -->
+                                <VBox id="_IDGenVBox6">
+                                    <Label
+                                        id="_IDGenLabel12"
+                                        text="Tare"
+                                    />
+                                    <Input
+                                        id="_IDGenInputTareWeight"
+                                        placeholder="Tare wt..."
+                                        maxLength="3"
+                                        width="80px"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </VBox>
+                                <!-- Net Weight Input -->
+                                <VBox id="_IDGenVBox7">
+                                    <Label
+                                        id="_IDGenLabel13"
+                                        text="Net"
+                                    />
+                                    <Input
+                                        id="_IDGenInputNetWeight"
+                                        placeholder="Net wt..."
+                                        maxLength="3"
+                                        width="80px"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </VBox>
+                                <!-- Gross Weight Input -->
+                                <VBox id="_IDGenVBox8">
+                                    <Label
+                                        id="_IDGenLabel14"
+                                        text="Gross"
+                                    />
+                                    <Input
+                                        id="_IDGenInputGrossWeight"
+                                        placeholder="gross Wt..."
+                                        maxLength="3"
+                                        width="80px"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </VBox>
+
+                                <!-- Height Mesurements of weights -->
+                                <VBox id="_IDGenVBox9">
+                                    <Label
+                                        id="_IDGenLabel15"
+                                        text=""
+                                    />
+                                    <Input
+                                        id="_IDGenInputweightsMesurement"
+                                        placeholder=""
+                                        maxLength="13.3"
+                                        width="40px"
+                                    />
+                                </VBox>
+                            </HBox>
+
+                            <!-- Volume Field -->
+                            <Label
+                                id="_IDGenLabel322"
+                                text="Volume"
+                            />
+                            <Input
+                                id="_IDGenInput33"
+                                placeholder="Enter Volume.."
+                                width="80px"
+                            />
+
+                            <!-- Location and Action Buttons -->
+                            <Label
+                                id="_IDGenLabel112"
+                                text="Location"
+                            />
+                            <VBox id="_IDGenVBox10">
+                                <Input
+                                    id="_IDGenInput313"
+                                    placeholder="Enter Location.."
+                                    width="200px"
+                                />
+
+                                <!-- HU Content and HU Hierarchy Buttons -->
+                                <HBox id="_IDGenHBox1">
+                                    <Button
+                                        id="_IDGenButton1"
+                                        text="HU Content"
+                                        press="onHUContentPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                    <Button
+                                        id="_IDGenButton2"
+                                        text="HU Hierarchy"
+                                        press="onHUHierarchyPress"
+                                    />
+                                </HBox>
+                            </VBox>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="icon3"
+                        visible="false"
+                        key="info2"
+                        text="HU Content"
+                    >
+                        <Table
+                            id="HuDetailsTable"
+                            inset="false"
+                            items="{/productData}"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            mode="None"
+                        >
+                            <columns>
+                                <Column
+                                    id="_IDGenColumn1"
+                                    width="17%"
+                                >
+                                    <Text
+                                        id="_IDGenText1"
+                                        text="S.No"
+                                    />
+                                </Column>
+                                <Column id="_IDGenColumn2">
+                                    <Text
+                                        id="_IDGenText2"
+                                        text="Product"
+                                    />
+                                </Column>
+                                <Column id="_IDGenColumn3">
+                                    <Text
+                                        id="_IDGenText3"
+                                        text="Quantity"
+                                    />
+                                </Column>
+                                <Column id="_IDGenColumn4">
+                                    <Text
+                                        id="_IDGenText4"
+                                        text="UOM"
+                                    />
+                                </Column>
+                                <Column id="_IDGenColumn5">
+                                    <Text
+                                        id="_IDGenText5"
+                                        text="Product Description"
+                                    />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem id="_IDGenColumnListItem1">
+                                    <cells>
+                                        <Text
+                                            id="_IDGenText6"
+                                            text="{serialNo}"
+                                        />
+                                        <Text
+                                            id="_IDGenText7"
+                                            text="{product}"
+                                        />
+                                        <Text
+                                            id="_IDGenText8"
+                                            text="{quantity}"
+                                        />
+                                        <Text
+                                            id="_IDGenText9"
+                                            text="{uom}"
+                                        />
+                                        <Text
+                                            id="_IDGenText10"
+                                            text="{productDescription}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="icon4"
+                        visible="false"
+                        key="info3"
+                        text="HU Hierarchy"
+                    >
+                        <Table
+                            id="simpleTable"
+                            inset="false"
+                            items="{/tableData}"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            mode="None"
+                        >
+                            <columns>
+                                <Column id="_IDGenColumn6">
+                                    <header>
+                                        <Label
+                                            id="_IDGenLabel5"
+                                            text="S.No"
+                                        />
+                                    </header>
+                                </Column>
+                                <Column id="_IDGenColumn7">
+                                    <header>
+                                        <Label
+                                            id="_IDGenLabel6"
+                                            text="Higher Level HU"
+                                        />
+                                    </header>
+                                </Column>
+                                <Column id="_IDGenColumn8">
+                                    <header>
+                                        <Label
+                                            id="_IDGenLabel7"
+                                            text="Highest Level HU"
+                                        />
+                                    </header>
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem id="_IDGenColumnListItem2">
+                                    <cells>
+                                        <Text
+                                            id="_IDGenText11"
+                                            text="{serialNo}"
+                                        />
+                                        <Text
+                                            id="_IDGenText12"
+                                            text="{higherLevelHU}"
+                                        />
+                                        <Text
+                                            id="_IDGenText13"
+                                            text="{highestLevelHU}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>

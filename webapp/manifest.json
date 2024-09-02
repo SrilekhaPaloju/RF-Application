@@ -102,9 +102,16 @@
         },
         {
           "name": "RouteUsermenu",
-          "pattern": "Usermenu",
+          "pattern": "Usermenu/{id}",
           "target": [
             "TargetUsermenu"
+          ]
+        },
+        {
+          "name": "HUQuerypage",
+          "pattern": "HUQuerypage",
+          "target": [
+            "TargetHUQuerypage"
           ]
         }
       ],
@@ -122,6 +129,13 @@
           "clearControlAggregation": false,
           "viewId": "Usermenu",
           "viewName": "Usermenu"
+        },
+        "TargetHUQuerypage": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "HuQuery",
+          "viewName": "HuQuery"
         }
       }
     },

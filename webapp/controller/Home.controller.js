@@ -4,13 +4,14 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     'sap/ui/core/SeparatorItem',
+    "sap/ui/model/json/JSONModel",
 ],
-    function (Controller, Device, MessageBox, SeparatorItem,MessageToast) {
+    function (Controller, Device, MessageBox, SeparatorItem, MessageToast,JSONModel) {
         "use strict";
 
         return Controller.extend("com.app.rfscreens.controller.Home", {
             onInit: function () {
-
+                    this._fetchUniqueProcessAreas();
             },
             onCloseDialog: function () {
                 if (this.ologinDialog.isOpen()) {
@@ -20,6 +21,7 @@ sap.ui.define([
             onPressSignupBtn: async function () {
                 if (!this.oActiveLoansDialog) {
                     this.oActiveLoansDialog = await this.loadFragment("SignUpDetails")
+                    this._fetchUniqueProcessAreas();
                 }
                 this.oActiveLoansDialog.open();
             },
@@ -34,7 +36,7 @@ sap.ui.define([
                 }
                 this.oforgotDialog.open();
             },
-            onRsesetPress: function () {
+            onCloseFP: function () {
                 this.oforgotDialog.close();
             },
             onClearRegisterDialog: function () {
@@ -50,58 +52,81 @@ sap.ui.define([
                 // Clear the selected keys from GroupSelect MultiComboBox
                 oView.byId("GroupSelect").setSelectedKeys([]);
 
-                var oMultiComboBox = this.byId("checkboxContainer");
+                var oMultiComboBox = this.byId("AreaSelect");
 
                 // Clear all selected items
-               oMultiComboBox.setSelectedKeys([]);
+                oMultiComboBox.setSelectedKeys([]);
             },
-         onCheckBoxSelect: function () {
-            // Get the MultiComboBox instance for the Process Area
-            var oMultiComboBox = this.byId("checkboxContainer");
-        
-            // Retrieve the selected items
-            var aSelectedItems = oMultiComboBox.getSelectedItems();
-        
-            // Initialize an array to hold the filters
-            var aFilters = [];
-        
-            // Iterate over the selected items to add corresponding filters
-            aSelectedItems.forEach(function(oItem) {
-                var sKey = oItem.getText(); // Get the key (e.g., "Inbound", "Outbound", "Internal")
-        
-                // Add filter for the selected process area
-                aFilters.push(new sap.ui.model.Filter("Processarea", sap.ui.model.FilterOperator.EQ, sKey)); 
-            });
-        
-            // Combine the filters with an OR condition
-            var oCombinedFilter = new sap.ui.model.Filter({
-                filters: aFilters,
-                and: false
-            });
-        
-            // Get the Group MultiComboBox and apply the filters
-            var oGroupMultiComboBox = this.byId("GroupSelect");
-        
-            // Bind the aggregation with the new filters
-            oGroupMultiComboBox.bindAggregation("items", {
-                path: "/AreaSet",
-                template: new sap.ui.core.Item({
-                    key: "{Processgroup}",
-                    text: "{Processgroup}"
-                }),
-                filters: oCombinedFilter,
-                sorter: {
-                    path: "Processarea",
-                    group: true
-                },
-                groupHeaderFactory: this.getGroupHeader
-            });
-        
-            // Make sure the Group MultiComboBox is visible
-            oGroupMultiComboBox.setVisible(true);
-        },                  
-            onSubmitPress: function () {
+            onCheckBoxSelect: function () {
+                // Get the MultiComboBox instance for the Process Area
+                var oMultiComboBox = this.byId("AreaSelect");
 
+                // Retrieve the selected items
+                var aSelectedItems = oMultiComboBox.getSelectedItems();
+
+                // Initialize an array to hold the filters
+                var aFilters = [];
+
+                // Iterate over the selected items to add corresponding filters
+                aSelectedItems.forEach(function (oItem) {
+                    var sKey = oItem.getText(); // Get the key (e.g., "Inbound", "Outbound", "Internal")
+
+                    // Add filter for the selected process area
+                    aFilters.push(new sap.ui.model.Filter("Processarea", sap.ui.model.FilterOperator.EQ, sKey));
+                });
+
+                // Combine the filters with an OR condition
+                var oCombinedFilter = new sap.ui.model.Filter({
+                    filters: aFilters,
+                    and: false // This specifies the OR condition
+                });
+
+                // Get the Group MultiComboBox and apply the filters
+                var oGroupMultiComboBox = this.byId("GroupSelect");
+                // Fetch data from the model with applied filters
+                var oModel = this.getView().getModel();
+                oModel.read("/AreaSet", {
+                    filters: [oCombinedFilter],
+                    success: function (oData) {
+                        // Process data to remove duplicates
+                        var aUniqueItems = [];
+                        var oProcessGroups = {};
+
+                        // Iterate over fetched data
+                        oData.results.forEach(function (oItem) {
+                            var sGroup = oItem.Processgroup;
+
+                            // Add to unique items if not already present
+                            if (!oProcessGroups[sGroup]) {
+                                oProcessGroups[sGroup] = true;
+                                aUniqueItems.push({
+                                    key: sGroup,
+                                    text: sGroup
+                                });
+                            }
+                        });
+
+                        // Clear existing items in the MultiComboBox
+                        oGroupMultiComboBox.removeAllItems();
+
+                        // Add the unique items to the MultiComboBox
+                        aUniqueItems.forEach(function (oItem) {
+                            oGroupMultiComboBox.addItem(new sap.ui.core.Item({
+                                key: oItem.key,
+                                text: oItem.text
+                            }));
+                        });
+
+                        // Make sure the Group MultiComboBox is visible
+                        oGroupMultiComboBox.setVisible(true);
+                    },
+                    error: function (oError) {
+                        // Handle error if necessary
+                        sap.m.MessageToast.show("Failed to fetch data.");
+                    }
+                });
+            }, 
+            onSubmitPress: function () {
                 const oUserView = this.getView();
                 // Get the form inputs
                 var sEmployeeID = this.byId("idEmployeeIDInput").getValue();
@@ -111,13 +136,10 @@ sap.ui.define([
                 var sPhone = this.byId("idInputPhoneNumber").getValue();
                 var oEmail = this.byId("idInputEmail").getValue();
 
-                var oMultiComboBox = this.byId("checkboxContainer");
+                var oMultiComboBox = this.byId("AreaSelect");
                 // Retrieve the selected items
-                var aSelectedItems = oMultiComboBox.getSelectedItems();
-                var aSelectedValues = aSelectedItems.map(function(oItem) {
-                    return oItem.getText(); // Use oItem.getKey() if you need the key instead of the text
-                });
-                var sSelectedAreas = aSelectedValues.join(","); 
+                var aSelectedItems = oMultiComboBox.getSelectedKeys();
+                var sSelectedAreas = aSelectedItems.join(",");
 
                 // Get the selected groups from the MultiComboBox
                 var oItem = this.byId("GroupSelect").getSelectedKeys();
@@ -198,8 +220,7 @@ sap.ui.define([
                     Area: sSelectedAreas,
                     Email: oEmail,
                     Phonenumber: sPhone,
-                    Resourcegroup: resourceGroup,
-                    Status :"true"
+                    Resourcegroup: resourceGroup
                 }, {
                     success: function (oData) {
                         sap.m.MessageToast.show("your details are sent to supervisior please wait until you get the approval");
@@ -220,56 +241,135 @@ sap.ui.define([
                 // Clear the selected keys from GroupSelect MultiComboBox
                 oUserView.byId("GroupSelect").setSelectedKeys([]);
 
-                var oMultiComboBox = this.byId("checkboxContainer");
+                var oMultiComboBox = this.byId("AreaSelect");
 
                 // Clear all selected items
-               oMultiComboBox.setSelectedKeys([]);
+                oMultiComboBox.setSelectedKeys([]);
             },
-            onResourceLoginBtnPress: async function () {
-                var oView = this.getView();
-
-                // Retrieve values from input fields
-                var sWarehouseNumber = oView.byId("idwhInput").getValue();
-                var sResourceId = oView.byId("IdResourceInput").getValue();
-                var sPassword = oView.byId("Idpassword").getValue();
-
-                // Perform validation checks
-                if (!sWarehouseNumber) {
-                    sap.m.MessageToast.show("Please enter the Warehouse Number.");
-                    return;
-                }
-                if (!sResourceId) {
-                    sap.m.MessageToast.show("Please enter the Resource ID.");
-                    return;
-                }
-                if (!sPassword) {
-                    sap.m.MessageToast.show("Please enter the Password.");
-                    return;
-                }
-                if (!(sWarehouseNumber && sResourceId && sPassword)) {
-                    sap.m.MessageToast.show("Please enter all the details");
-                    return;
-                }
-
-                // Get the model from the component
-                var oModel = this.getOwnerComponent().getModel();
-
-                // Make the API call to check if the resource exists
-                try {
-                    await oModel.read("/RFUISet('" + sResourceId + "')", {
-                        success: function (oData) {
-                            var Id = oData.Resourceid;
-                            this.getOwnerComponent().getRouter().navTo("RouteUsermenu", { id: Id });
-                            // You can perform further actions here, like navigating to the next view
-                        }.bind(this),
-                        error: function () {
-                            sap.m.MessageToast.show("User does not exist");
-                        }
+        _fetchUniqueProcessAreas: function (){
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.read("/AreaSet", {
+                success: function (oData) {
+                    var aProcessAreas = oData.results;
+                    var uniqueProcessAreasSet = new Set();
+        
+                    // Add unique Processarea values to the Set
+                    aProcessAreas.forEach(function (item) {
+                        uniqueProcessAreasSet.add(item.Processarea);
                     });
-                } catch (error) {
-                    MessageToast.show("An error occurred while checking the user.");
+        
+                    // Convert the Set back to an array for the JSON model
+                    var aUniqueProcessAreas = Array.from(uniqueProcessAreasSet).map(function (area) {
+                        return { Processarea: area };
+                    });
+        
+                    var oUniqueModel = new sap.ui.model.json.JSONModel({
+                        ProcessAreas: aUniqueProcessAreas
+                    });
+        
+                   var oMultiComboBox = this.byId("AreaSelect");
+                    if (!oMultiComboBox) {
+                        // If it's inside a fragment, use Fragment.byId
+                        oMultiComboBox = sap.ui.core.Fragment.byId("fragmentId", "AreaSelect");
+                    }
+                    if (oMultiComboBox) {
+                        oMultiComboBox.setModel(oUniqueModel);
+                        oMultiComboBox.bindItems({
+                            path: "/ProcessAreas",
+                            template: new sap.ui.core.Item({
+                                key: "{Processarea}",
+                                text: "{Processarea}"
+                            })
+                        });
+                    } else {
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    console.error("Error reading AreaSet:", oError);
                 }
-            },
+            });
+        },
+        onResourceLoginBtnPress: async function () {
+            debugger
+            var oView = this.getView();
+
+            // Retrieve values from input fields
+            var sWarehouseNumber = oView.byId("idwhInput").getValue();
+            var sResourceId = oView.byId("IdResourceInput").getValue();
+            var sPassword = oView.byId("Idpassword").getValue();
+
+            // Perform validation checks
+
+            var bValid = true;
+            var bAllFieldsFilled = true;
+
+            if (!sWarehouseNumber) {
+                oView.byId("idwhInput").setValueState("Information");
+                oView.byId("idwhInput").setValueStateText("warehouse number is mandatory");
+                bValid = false;
+                bAllFieldsFilled = false;
+            } else if (sWarehouseNumber.length !== 4 || !/^\d+$/.test(sWarehouseNumber)) {
+                oView.byId("idwhInput").setValueState("Information");
+                oView.byId("idwhInput").setValueStateText("Warehouse number must be a 4-digit Alphanumeric value.");
+                bValid = false;
+            } else {
+                oView.byId("idwhInput").setValueState("None");
+            }
+            if (!sResourceId) {
+                oView.byId("IdResourceInput").setValueState("Information");
+                oView.byId("IdResourceInput").setValueStateText("ResourceID number is mandatory");
+                bValid = false;
+                bAllFieldsFilled = false;
+            } else if (sResourceId.length !== 6 || !/^\d+$/.test(sResourceId)) {
+                oView.byId("IdResourceInput").setValueState("Information");
+                oView.byId("IdResourceInput").setValueStateText("ResourceID must be a 6-digit numeric value.");
+                bValid = false;
+            } else {
+                oView.byId("IdResourceInput").setValueState("None");
+            }
+            if (!sPassword) {
+                oView.byId("Idpassword").setValueState("Information");
+                oView.byId("Idpassword").setValueStateText("Password number is mandatory");
+                bValid = false;
+                bAllFieldsFilled = false;
+            } else if (sPassword.length !== 6 || !/^\d+$/.test(sPassword)) {
+                oView.byId("Idpassword").setValueState("Information");
+                oView.byId("Idpassword").setValueStateText("Password must be a 6-digit numeric value.");
+                bValid = false;
+            } else {
+                oView.byId("Idpassword").setValueState("None");
+            }
+
+            if (!bAllFieldsFilled) {
+                sap.m.MessageToast.show("Please Enter all mandatory details");
+                return;
+            }
+
+            if (!bValid) {
+                sap.m.MessageToast.show("Please enter correct data");
+                return;
+            }
+
+            // Get the model from the component
+            var oModel = this.getOwnerComponent().getModel();
+
+            // Make the API call to check if the resource exists
+            try {
+                await oModel.read("/RFUISet('" + sResourceId + "')", {
+                    success: function (oData) {
+                        var Id = oData.Resourceid;
+                        this.getRouter().navTo("RouteUsermenu", { id: Id });
+                        sap.m.MessageToast.show("Success! You have been logged in as Resource ID: " + Id);
+                        // You can perform further actions here, like navigating to the next view
+                    }.bind(this),
+                    error: function () {
+                        sap.m.MessageToast.show("User does not exist");
+                    }
+                });
+            } catch (error) {
+                sap.m.MessageToast.show("An error occurred while checking the user.");
+            }
+        },
 
         });
     });

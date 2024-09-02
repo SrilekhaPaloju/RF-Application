@@ -106,56 +106,22 @@
                     />
                 </ComboBox>
                 <Label
-                    id="idLabelName"
+                    id="idLabelArea"
                     text="Process Area"
                     required="true"
                 />
-
-                <MultiComboBox id="checkboxContainer" selectionChange="onCheckBoxSelect">
+                      <MultiComboBox
+                    id="AreaSelect"
+                    items="{path: '/AreaSet'}"
+                    selectionChange="onCheckBoxSelect"
+                >
                     <core:Item
                         class="dropdown"
-                        id="inboundCheckBox"
-                        key=""
-                        text="Inbound"
-        
-                    />
-                    <core:Item
-                        class="dropdown"
-                        id="outboundCheckBox"
-                        key=""
-                        text="Outbound"
-            
-                    />
-                    <core:Item
-                        class="dropdown"
-                        id="internalCheckBox"
-                        key=""
-                        text="Internal"
-                 
+                        id="_IDGenItem5"
+                        key="{Processarea}"
+                        text="{Processarea}"
                     />
                 </MultiComboBox>
-                <!-- <HBox
-                    id="checkboxContainer"
-                    width="100%"
-                >
-                    <CheckBox
-                        id="inboundCheckBox"
-                        text="Inbound"
-                        select="onCheckBoxSelect"
-                    />
-
-                    <CheckBox
-                        id="outboundCheckBox"
-                        text="Outbound"
-                        select="onCheckBoxSelect"
-                    />
-
-                    <CheckBox
-                        id="internalCheckBox"
-                        text="Internal"
-                        select="onCheckBoxSelect"
-                    />
-                </HBox> -->
                 <Label
                     id="idLableGroup"
                     text="Group"

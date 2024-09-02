@@ -24,7 +24,7 @@
                         />
                     </layoutData>
                 </Button>
-                <Image
+                <Image id="_IDGenImage1"
                     height="1.5rem"
                     class="sapUiSmallMarginBegin"
                     src="https://artihcus.com/assets/img/AG-logo.png"
@@ -50,7 +50,7 @@
                         />
                     </layoutData>
                 </ToolbarSpacer>
-                <Image
+                <Image id="_IDGenImage2"
                     height="1.5rem"
                     class="sapUiSmallMarginBegin"
                     src="https://artihcus.com/assets/img/AG-logo.png"
@@ -62,13 +62,13 @@
                     press=".handleUserNamePress"
                     ariaHasPopup="Menu"
                 />
-                <Avatar
+                <Avatar id="_IDGenAvatar1"
                     displaySize="XS"
                     press="onAvatarPressed"
                     tooltip="Profile"
                 >
                     <layoutData>
-                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                        <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow" />
                     </layoutData>
                 </Avatar>
             </tnt:ToolHeader>
@@ -142,7 +142,7 @@
                             width="100%"
                             class="sapUiContent pages"
                         >
-                            <HBox>
+                            <HBox id="_IDGenHBox1">
                                 <VBox
                                     id="idAssignslots"
                                     class="sapUiResponsiveMargin boxContainer"
@@ -591,6 +591,12 @@
                                             />
                                         </layoutData>
                                     </SearchField>
+                                              <Button
+                                            id="idButtonAccept"
+                                            text="Accept"
+                                            type="Accept"
+                                            press="onResetPress"
+                                        />
  
                                     <Button
                                         id="idBtnEdi"
@@ -687,6 +693,10 @@
                                         <Text
                                             id="idRDGroupColValue"
                                             text="{Resourcegroup}"
+                                        />
+                                         <Text
+                                            id="idRDTypeColValue"
+                                            text="{Resouecetype}"
                                         />
                                         <Text
                                             id="idRDEmailColValue"

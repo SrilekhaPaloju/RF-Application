@@ -1,68 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<edmx:Edmx xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
-
-
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
 <edmx:DataServices m:DataServiceVersion="2.0">
-
-
-<Schema xml:lang="en" xmlns="http://schemas.microsoft.com/ado/2008/09/edm" sap:schema-version="1" Namespace="ZEWM_RFUI_B_SRV">
-
-<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" String="1.0.0" Term="Core.SchemaVersion"/>
-
-
-<EntityType sap:content-version="1" Name="RFUI">
-
-
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZEWM_RFUI_B_SRV" xml:lang="en" sap:schema-version="1">
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+<EntityType Name="RFUI" sap:content-version="1">
 <Key>
-
 <PropertyRef Name="Resourceid"/>
-
 </Key>
-
-<Property Name="Resourceid" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="EMPLOYEE ID" sap:unicode="false" MaxLength="6" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Resourcename" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="resource name" sap:unicode="false" MaxLength="40" Nullable="false" Type="Edm.String" sap:quickinfo="Resource Name"/>
-
-<Property Name="Area" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="AREA" sap:unicode="false" MaxLength="20" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Resourcegroup" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="GROUP" sap:unicode="false" MaxLength="40" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Email" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="EMAIL" sap:unicode="false" MaxLength="30" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Phonenumber" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="PHONENUMBER" sap:unicode="false" MaxLength="10" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Notification" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="NOTIFICATION" sap:unicode="false" Nullable="false" Type="Edm.String" sap:quickinfo="NOTIFICATIONS" sap:heading="NOTIFICATIONS"/>
-
-<Property Name="Notifysupervisor" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="NOTIFY SUPERVISOR" sap:unicode="false" Nullable="false" Type="Edm.String" sap:quickinfo="NOTIFICATION SUPERVISOR"/>
-
-<Property Name="Status" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="Status" sap:unicode="false" MaxLength="10" Nullable="false" Type="Edm.String" sap:quickinfo="status details"/>
-
-<Property Name="Password" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="PASSWORD" sap:unicode="false" MaxLength="8" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Approveddate" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="APPROVED DATE" sap:unicode="false" MaxLength="20" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Expirydate" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="EXPIRY DATE" sap:unicode="false" MaxLength="20" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Queue" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="QUEUE" sap:unicode="false" MaxLength="50" Nullable="false" Type="Edm.String"/>
-
-<Property Name="Validity" sap:filterable="false" sap:sortable="false" sap:updatable="false" sap:creatable="false" sap:label="Checkbox" sap:unicode="false" Nullable="false" Type="Edm.Boolean"/>
-
+<Property Name="Resourceid" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="EMPLOYEE ID"/>
+<Property Name="Resourcename" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="resource name"/>
+<Property Name="Resouecetype" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Resource type"/>
+<Property Name="Area" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="AREA"/>
+<Property Name="Resourcegroup" Type="Edm.String" MaxLength="150" sap:unicode="false" sap:label="GROUP"/>
+<Property Name="Email" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="EMAIL"/>
+<Property Name="Phonenumber" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="PHONENUMBER"/>
+<Property Name="Notification" Type="Edm.String" sap:unicode="false" sap:label="NOTIFICATION"/>
+<Property Name="Notifysupervisor" Type="Edm.String" sap:unicode="false" sap:label="NOTIFY SUPERVISOR"/>
+<Property Name="Status" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Status"/>
+<Property Name="Password" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="PASSWORD"/>
+<Property Name="Approveddate" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="APPROVED DATE"/>
+<Property Name="Expirydate" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="EXPIRY DATE"/>
+<Property Name="Queue" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="QUEUE"/>
+<Property Name="Validity" Type="Edm.Boolean" sap:unicode="false" sap:label="Checkbox"/>
 </EntityType>
-
-
--<EntityContainer Name="ZEWM_RFUI_B_SRV_Entities" sap:supported-formats="atom json xlsx" m:IsDefaultEntityContainer="true">
-
-<EntitySet sap:content-version="1" Name="RFUISet" sap:updatable="false" sap:creatable="false" sap:pageable="false" sap:deletable="false" EntityType="ZEWM_RFUI_B_SRV.RFUI"/>
-
+<EntityType Name="hu_details" sap:content-version="1">
+<Key>
+<PropertyRef Name="Huident"/>
+</Key>
+<Property Name="Huident" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Handling Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Letyp" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="HU Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Matid" Type="Edm.Binary" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="Product" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Quan" Type="Edm.Decimal" Nullable="false" Precision="31" Scale="14" sap:unicode="false" sap:label="Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Meins" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Base Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+<Property Name="GWeight" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Total Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="NWeight" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Loading Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="TWeight" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="HU Tare Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Length" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Length" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Width" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Width" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Height" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Height" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="UnitLwh" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+<Property Name="UnitGw" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Weight Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+<Property Name="GVolume" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Total Volume" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="UnitTv" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Volume Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+<Property Name="Lgpla" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:label="Storage Bin" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="Area" sap:content-version="1">
+<Key>
+<PropertyRef Name="Processid"/>
+</Key>
+<Property Name="Processid" Type="Edm.String" Nullable="false" MaxLength="36" sap:unicode="false" sap:label="Process Id"/>
+<Property Name="Processarea" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="Process Area"/>
+<Property Name="Processgroup" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Process Group"/>
+<Property Name="Queue" Type="Edm.String" MaxLength="100" sap:unicode="false" sap:label="Queue"/>
+</EntityType>
+<EntityContainer Name="ZEWM_RFUI_B_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="RFUISet" EntityType="ZEWM_RFUI_B_SRV.RFUI" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+<EntitySet Name="hu_detailsSet" EntityType="ZEWM_RFUI_B_SRV.hu_details" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+<EntitySet Name="AreaSet" EntityType="ZEWM_RFUI_B_SRV.Area" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
 </EntityContainer>
-
-<atom:link rel="self" href="https://VHCALAKECI.ARTIHCUS.COM:44306/sap/opu/odata/sap/ZEWM_RFUI_B_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
-
-<atom:link rel="latest-version" href="https://VHCALAKECI.ARTIHCUS.COM:44306/sap/opu/odata/sap/ZEWM_RFUI_B_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
-
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://vhcalakeci.artihcus.com:50600/sap/opu/odata/sap/ZEWM_RFUI_B_SRV/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://vhcalakeci.artihcus.com:50600/sap/opu/odata/sap/ZEWM_RFUI_B_SRV/$metadata"/>
 </Schema>
-
 </edmx:DataServices>
-
 </edmx:Edmx>
