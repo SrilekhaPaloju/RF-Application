@@ -6,12 +6,12 @@ sap.ui.define([
     'sap/ui/core/SeparatorItem',
     "sap/ui/model/json/JSONModel",
 ],
-    function (Controller, Device, MessageBox, SeparatorItem, MessageToast,JSONModel) {
+    function (Controller, Device, MessageBox, SeparatorItem, MessageToast, JSONModel) {
         "use strict";
 
         return Controller.extend("com.app.rfscreens.controller.Home", {
             onInit: function () {
-                    this._fetchUniqueProcessAreas();
+                this._fetchUniqueProcessAreas();
             },
             onCloseDialog: function () {
                 if (this.ologinDialog.isOpen()) {
@@ -125,251 +125,300 @@ sap.ui.define([
                         sap.m.MessageToast.show("Failed to fetch data.");
                     }
                 });
-            }, 
-            onSubmitPress: function () {
-                const oUserView = this.getView();
-                // Get the form inputs
-                var sEmployeeID = this.byId("idEmployeeIDInput").getValue();
-                var sResourceName = this.byId("idResourceNameInput").getValue();
-                var oResourceTypeComboBox = oUserView.byId("idRoesurcetypeInput");
-                var oSelectedItem = oResourceTypeComboBox.getSelectedItem();
-                var sPhone = this.byId("idInputPhoneNumber").getValue();
-                var oEmail = this.byId("idInputEmail").getValue();
-
-                var oMultiComboBox = this.byId("AreaSelect");
-                // Retrieve the selected items
-                var aSelectedItems = oMultiComboBox.getSelectedKeys();
-                var sSelectedAreas = aSelectedItems.join(",");
-
-                // Get the selected groups from the MultiComboBox
-                var oItem = this.byId("GroupSelect").getSelectedKeys();
-                var resourceGroup = oItem.join(", ");
-
-                var bValid = true;
-                var bAllFieldsFilled = true;
-
-                // Validate fields and set value state and messages
-                if (!sEmployeeID) {
-                    oUserView.byId("idEmployeeIDInput").setValueState("Information");
-                    oUserView.byId("idEmployeeIDInput").setValueStateText("Employee ID is mandatory");
-                    bValid = false;
-                    bAllFieldsFilled = false;
-                } else if (!/^\d{6}$/.test(sEmployeeID)) {
-                    oUserView.byId("idEmployeeIDInput").setValueState("Information");
-                    oUserView.byId("idEmployeeIDInput").setValueStateText("Resource ID must be a 6-digit numeric value");
-                    bValid = false;
-                } else {
-                    oUserView.byId("idEmployeeIDInput").setValueState("None");
-                }
-
-                if (!sResourceName) {
-                    oUserView.byId("idResourceNameInput").setValueState("Information");
-                    oUserView.byId("idResourceNameInput").setValueStateText("Resource Name cannot be empty");
-                    bValid = false;
-                    bAllFieldsFilled = false;
-                } else {
-                    oUserView.byId("idResourceNameInput").setValueState("None");
-                }
-
-                if (!oSelectedItem) {
-                    oUserView.byId("idRoesurcetypeInput").setValueState("Information");
-                    oUserView.byId("idRoesurcetypeInput").setValueStateText("Please select Resource Type");
-                    bValid = false;
-                    bAllFieldsFilled = false;
-                } else {
-                    oUserView.byId("idRoesurcetypeInput").setValueState("None");
-                }
-
-                // Validate Phone Number
-                if (!sPhone) {
-                    oUserView.byId("idInputPhoneNumber").setValueState("Information");
-                    oUserView.byId("idInputPhoneNumber").setValueStateText("Phone number is mandatory");
-                    bValid = false;
-                    bAllFieldsFilled = false;
-                } else if (sPhone.length !== 10 || !/^\d+$/.test(sPhone)) {
-                    oUserView.byId("idInputPhoneNumber").setValueState("Information");
-                    oUserView.byId("idInputPhoneNumber").setValueStateText("Phone number must be a 10-digit numeric value");
-                    bValid = false;
-                } else {
-                    oUserView.byId("idInputPhoneNumber").setValueState("None");
-                }
-
-                if (!bAllFieldsFilled) {
-                    sap.m.MessageToast.show("Please fill all mandatory details");
-                    return;
-                }
-
-                if (!bValid) {
-                    sap.m.MessageToast.show("Please enter correct data");
-                    return;
-                }
-
-
-                if (!bValid) {
-                    sap.m.MessageToast.show("Please fill all the required fields correctly.");
-                    return; // Prevent further execution
-                }
-
-                var oModel = this.getView().getModel();
-                var that = this;
-                oModel.create("/RFUISet", {
-                    Resourceid: sEmployeeID,
-                    Validity: false,
-                    Resourcename: sResourceName,
-                    Resouecetype: oSelectedItem.getKey(), // assuming getKey() gives the value you need
-                    Area: sSelectedAreas,
-                    Email: oEmail,
-                    Phonenumber: sPhone,
-                    Resourcegroup: resourceGroup
-                }, {
-                    success: function (oData) {
-                        sap.m.MessageToast.show("your details are sent to supervisior please wait until you get the approval");
-                        that.oActiveLoansDialog.close();
-                    },
-                    error: function (oError) {
-                        MessageBox.error("Error");
-                    }
-                })
-                oUserView.byId("idEmployeeIDInput").setValue("");
-                oUserView.byId("idResourceNameInput").setValue("");
-                oUserView.byId("idInputEmail").setValue("");
-                oUserView.byId("idInputPhoneNumber").setValue("");
-
-                // Unselect checkboxes
-                oUserView.byId("idRoesurcetypeInput").setSelectedItem(null);
-
-                // Clear the selected keys from GroupSelect MultiComboBox
-                oUserView.byId("GroupSelect").setSelectedKeys([]);
-
-                var oMultiComboBox = this.byId("AreaSelect");
-
-                // Clear all selected items
-                oMultiComboBox.setSelectedKeys([]);
             },
-        _fetchUniqueProcessAreas: function (){
-            var oModel = this.getOwnerComponent().getModel();
-            oModel.read("/AreaSet", {
-                success: function (oData) {
-                    var aProcessAreas = oData.results;
-                    var uniqueProcessAreasSet = new Set();
-        
-                    // Add unique Processarea values to the Set
-                    aProcessAreas.forEach(function (item) {
-                        uniqueProcessAreasSet.add(item.Processarea);
-                    });
-        
-                    // Convert the Set back to an array for the JSON model
-                    var aUniqueProcessAreas = Array.from(uniqueProcessAreasSet).map(function (area) {
-                        return { Processarea: area };
-                    });
-        
-                    var oUniqueModel = new sap.ui.model.json.JSONModel({
-                        ProcessAreas: aUniqueProcessAreas
-                    });
-        
-                   var oMultiComboBox = this.byId("AreaSelect");
-                    if (!oMultiComboBox) {
-                        // If it's inside a fragment, use Fragment.byId
-                        oMultiComboBox = sap.ui.core.Fragment.byId("fragmentId", "AreaSelect");
-                    }
-                    if (oMultiComboBox) {
-                        oMultiComboBox.setModel(oUniqueModel);
-                        oMultiComboBox.bindItems({
-                            path: "/ProcessAreas",
-                            template: new sap.ui.core.Item({
-                                key: "{Processarea}",
-                                text: "{Processarea}"
-                            })
+            onSubmitPress: function () {
+                var oUserView = this.getView();
+                var oAreaSelect = this.byId("AreaSelect");
+                var oGroupSelect = this.byId("GroupSelect");
+
+                // Get selected process areas
+                var aSelectedAreas = oAreaSelect.getSelectedKeys();
+
+                // Get selected groups
+                var aSelectedGroups = oGroupSelect.getSelectedKeys();
+
+                // Define a map of process areas to corresponding groups
+                var oAreaGroupMap = {
+                    "Inbound": ["Unloading", "Deconsolidation", "Putaway", "Receiving Of Hanndling Units", "Set Ready for warehouse processing"], // Example group keys for Inbound
+                    "Outbound": ["Picking", "Packing", "Loading", "Pick Point", "Consumption", "Distribution Equipment"],// Example group keys for Outbound
+                    "Internal": ["Inventory Counting", "Adhoc WT creations", "Queries", "Quality Management", "Resource Management"] // Example group keys for Internal
+                };
+
+                var bError = false;
+
+                // Validate the selection
+                aSelectedAreas.forEach(function (sArea) {
+                    if (oAreaGroupMap[sArea]) {
+                        var aCorrespondingGroups = oAreaGroupMap[sArea];
+                        var bGroupSelected = aSelectedGroups.some(function (sGroup) {
+                            return aCorrespondingGroups.includes(sGroup);
                         });
-                    } else {
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    console.error("Error reading AreaSet:", oError);
-                }
-            });
-        },
-        onResourceLoginBtnPress: async function () {
-            debugger
-            var oView = this.getView();
 
-            // Retrieve values from input fields
-            var sWarehouseNumber = oView.byId("idwhInput").getValue();
-            var sResourceId = oView.byId("IdResourceInput").getValue();
-            var sPassword = oView.byId("Idpassword").getValue();
-
-            // Perform validation checks
-
-            var bValid = true;
-            var bAllFieldsFilled = true;
-
-            if (!sWarehouseNumber) {
-                oView.byId("idwhInput").setValueState("Information");
-                oView.byId("idwhInput").setValueStateText("warehouse number is mandatory");
-                bValid = false;
-                bAllFieldsFilled = false;
-            } else if (sWarehouseNumber.length !== 4 || !/^\d+$/.test(sWarehouseNumber)) {
-                oView.byId("idwhInput").setValueState("Information");
-                oView.byId("idwhInput").setValueStateText("Warehouse number must be a 4-digit Alphanumeric value.");
-                bValid = false;
-            } else {
-                oView.byId("idwhInput").setValueState("None");
-            }
-            if (!sResourceId) {
-                oView.byId("IdResourceInput").setValueState("Information");
-                oView.byId("IdResourceInput").setValueStateText("ResourceID number is mandatory");
-                bValid = false;
-                bAllFieldsFilled = false;
-            } else if (sResourceId.length !== 6 || !/^\d+$/.test(sResourceId)) {
-                oView.byId("IdResourceInput").setValueState("Information");
-                oView.byId("IdResourceInput").setValueStateText("ResourceID must be a 6-digit numeric value.");
-                bValid = false;
-            } else {
-                oView.byId("IdResourceInput").setValueState("None");
-            }
-            if (!sPassword) {
-                oView.byId("Idpassword").setValueState("Information");
-                oView.byId("Idpassword").setValueStateText("Password number is mandatory");
-                bValid = false;
-                bAllFieldsFilled = false;
-            } else if (sPassword.length !== 6 || !/^\d+$/.test(sPassword)) {
-                oView.byId("Idpassword").setValueState("Information");
-                oView.byId("Idpassword").setValueStateText("Password must be a 6-digit numeric value.");
-                bValid = false;
-            } else {
-                oView.byId("Idpassword").setValueState("None");
-            }
-
-            if (!bAllFieldsFilled) {
-                sap.m.MessageToast.show("Please Enter all mandatory details");
-                return;
-            }
-
-            if (!bValid) {
-                sap.m.MessageToast.show("Please enter correct data");
-                return;
-            }
-
-            // Get the model from the component
-            var oModel = this.getOwnerComponent().getModel();
-
-            // Make the API call to check if the resource exists
-            try {
-                await oModel.read("/RFUISet('" + sResourceId + "')", {
-                    success: function (oData) {
-                        var Id = oData.Resourceid;
-                        this.getRouter().navTo("RouteUsermenu", { id: Id });
-                        sap.m.MessageToast.show("Success! You have been logged in as Resource ID: " + Id);
-                        // You can perform further actions here, like navigating to the next view
-                    }.bind(this),
-                    error: function () {
-                        sap.m.MessageToast.show("User does not exist");
+                        if (!bGroupSelected) {
+                            bError = true;
+                            MessageBox.error("Please select at least one group from the " + sArea + " area.");
+                        }
                     }
                 });
-            } catch (error) {
-                sap.m.MessageToast.show("An error occurred while checking the user.");
-            }
-        },
+                if (!bError) {
+                    // Get the form inputs
+                    var sEmployeeID = this.byId("idEmployeeIDInput").getValue();
+                    var sResourceName = this.byId("idResourceNameInput").getValue();
+                    var oResourceTypeComboBox = oUserView.byId("idRoesurcetypeInput");
+                    var oSelectedItem = oResourceTypeComboBox.getSelectedItem();
+                    var sPhone = this.byId("idInputPhoneNumber").getValue();
+                    var oEmail = this.byId("idInputEmail").getValue();
+
+                    var oMultiComboBox = this.byId("AreaSelect");
+                    // Retrieve the selected items
+                    var aSelectedItems = oMultiComboBox.getSelectedKeys();
+                    var sSelectedAreas = aSelectedItems.join(",");
+
+                    // Get the selected groups from the MultiComboBox
+                    var oItem = this.byId("GroupSelect").getSelectedKeys();
+                    var resourceGroup = oItem.join(", ");
+
+                    var bValid = true;
+                    var bAllFieldsFilled = true;
+
+                    // Validate fields and set value state and messages
+                    if (!sEmployeeID) {
+                        oUserView.byId("idEmployeeIDInput").setValueState("Information");
+                        oUserView.byId("idEmployeeIDInput").setValueStateText("Employee ID is mandatory");
+                        bValid = false;
+                        bAllFieldsFilled = false;
+                    } else if (!/^\d{6}$/.test(sEmployeeID)) {
+                        oUserView.byId("idEmployeeIDInput").setValueState("Information");
+                        oUserView.byId("idEmployeeIDInput").setValueStateText("Resource ID must be a 6-digit numeric value");
+                        bValid = false;
+                    } else {
+                        oUserView.byId("idEmployeeIDInput").setValueState("None");
+                    }
+
+                    if (!sResourceName) {
+                        oUserView.byId("idResourceNameInput").setValueState("Information");
+                        oUserView.byId("idResourceNameInput").setValueStateText("Resource Name cannot be empty");
+                        bValid = false;
+                        bAllFieldsFilled = false;
+                    } else {
+                        oUserView.byId("idResourceNameInput").setValueState("None");
+                    }
+
+                    if (!oSelectedItem) {
+                        oUserView.byId("idRoesurcetypeInput").setValueState("Information");
+                        oUserView.byId("idRoesurcetypeInput").setValueStateText("Please select Resource Type");
+                        bValid = false;
+                        bAllFieldsFilled = false;
+                    } else {
+                        oUserView.byId("idRoesurcetypeInput").setValueState("None");
+                    }
+
+                    // Validate Phone Number
+                    if (!sPhone) {
+                        oUserView.byId("idInputPhoneNumber").setValueState("Information");
+                        oUserView.byId("idInputPhoneNumber").setValueStateText("Phone number is mandatory");
+                        bValid = false;
+                        bAllFieldsFilled = false;
+                    } else if (sPhone.length !== 10 || !/^\d+$/.test(sPhone)) {
+                        oUserView.byId("idInputPhoneNumber").setValueState("Information");
+                        oUserView.byId("idInputPhoneNumber").setValueStateText("Phone number must be a 10-digit numeric value");
+                        bValid = false;
+                    } else {
+                        oUserView.byId("idInputPhoneNumber").setValueState("None");
+                    }
+
+                    if (!bAllFieldsFilled) {
+                        sap.m.MessageToast.show("Please fill all mandatory details");
+                        return;
+                    }
+
+                    if (!bValid) {
+                        sap.m.MessageToast.show("Please enter correct data");
+                        return;
+                    }
+
+
+                    if (!bValid) {
+                        sap.m.MessageToast.show("Please fill all the required fields correctly.");
+                        return; // Prevent further execution
+                    }
+
+                    var oModel = this.getView().getModel();
+                    var that = this;
+                    oModel.create("/RFUISet", {
+                        Resourceid: sEmployeeID,
+                        Validity: false,
+                        Resourcename: sResourceName,
+                        Resouecetype: oSelectedItem.getKey(), // assuming getKey() gives the value you need
+                        Area: sSelectedAreas,
+                        Email: oEmail,
+                        Phonenumber: sPhone,
+                        Resourcegroup: resourceGroup,
+                        Loginfirst: true,
+                    }, {
+                        success: function (oData) {
+                            sap.m.MessageToast.show("your details are sent to supervisior please wait until you get the approval");
+                            that.oActiveLoansDialog.close();
+                        },
+                        error: function (oError) {
+                            MessageBox.error("Error");
+                        }
+                    })
+                    oUserView.byId("idEmployeeIDInput").setValue("");
+                    oUserView.byId("idResourceNameInput").setValue("");
+                    oUserView.byId("idInputEmail").setValue("");
+                    oUserView.byId("idInputPhoneNumber").setValue("");
+
+                    // Unselect checkboxes
+                    oUserView.byId("idRoesurcetypeInput").setSelectedItem(null);
+
+                    // Clear the selected keys from GroupSelect MultiComboBox
+                    oUserView.byId("GroupSelect").setSelectedKeys([]);
+
+                    var oMultiComboBox = this.byId("AreaSelect");
+
+                    // Clear all selected items
+                    oMultiComboBox.setSelectedKeys([]);
+                }
+            },
+            _fetchUniqueProcessAreas: function () {
+                var oModel = this.getOwnerComponent().getModel();
+                oModel.read("/AreaSet", {
+                    success: function (oData) {
+                        var aProcessAreas = oData.results;
+                        var uniqueProcessAreasSet = new Set();
+
+                        // Add unique Processarea values to the Set
+                        aProcessAreas.forEach(function (item) {
+                            uniqueProcessAreasSet.add(item.Processarea);
+                        });
+
+                        // Convert the Set back to an array for the JSON model
+                        var aUniqueProcessAreas = Array.from(uniqueProcessAreasSet).map(function (area) {
+                            return { Processarea: area };
+                        });
+
+                        var oUniqueModel = new sap.ui.model.json.JSONModel({
+                            ProcessAreas: aUniqueProcessAreas
+                        });
+
+                        var oMultiComboBox = this.byId("AreaSelect");
+                        if (!oMultiComboBox) {
+                            // If it's inside a fragment, use Fragment.byId
+                            oMultiComboBox = sap.ui.core.Fragment.byId("fragmentId", "AreaSelect");
+                        }
+                        if (oMultiComboBox) {
+                            oMultiComboBox.setModel(oUniqueModel);
+                            oMultiComboBox.bindItems({
+                                path: "/ProcessAreas",
+                                template: new sap.ui.core.Item({
+                                    key: "{Processarea}",
+                                    text: "{Processarea}"
+                                })
+                            });
+                        } else {
+                        }
+                    }.bind(this),
+                    error: function (oError) {
+                        console.error("Error reading AreaSet:", oError);
+                    }
+                });
+            },
+            onResourceLoginBtnPress: async function () {
+                var oView = this.getView();
+
+                // Retrieve values from input fields
+                var sWarehouseNumber = oView.byId("idwhInput").getValue();
+                var sResourceId = oView.byId("IdResourceInput").getValue();
+                var sPassword = oView.byId("Idpassword").getValue();
+
+                // Get the model from the component
+                var oModel = this.getOwnerComponent().getModel();
+                var that = this;
+                try {
+                    // Make the API call to check if the resource exists
+                    await oModel.read("/RFUISet('" + sResourceId + "')", {
+                        success: function (oData) {
+                            // Check if the password matches
+                            if (oData.Password === sPassword) {
+                             
+
+                                // Check if the user is logging in for the first time
+                                if (oData.Loginfirst) {
+                                    sap.m.MessageToast.show("Welcome! It seems this is your first login.");
+                                    that.sample();
+                                } else {
+                                 var Id = oData.Resourceid;
+                                 this.getRouter().navTo("RouteUsermenu", { id: Id });
+                                 sap.m.MessageToast.show("Welcome back!");
+                            }
+                            } else {
+                                // If password doesn't match, show an error message
+                                sap.m.MessageToast.show("Incorrect password.");
+                            }
+                        }.bind(this),
+                        error: function () {
+                            sap.m.MessageToast.show("User does not exist.");
+                        }
+                    });
+                } catch (error) {
+                    sap.m.MessageToast.show("An error occurred while checking the user.");
+                }
+
+            },
+            sample: async function () {
+                if (!this.oResetDialog) {
+                    this.oResetDialog = await this.loadFragment("Resetpassword")
+                }
+                this.oResetDialog.open();
+            },
+            onCancelPress:function(){
+                if (this.oResetDialog.isOpen()) {
+                    this.oResetDialog.close()
+                }
+            },
+            onSavePress: async function () {
+                var oView = this.getView();
+            
+                // Retrieve the new password and confirm password from the dialog input fields
+                var sNewPassword = oView.byId("idResetNewPassword").getValue();
+                var sConfirmPassword = oView.byId("idresetConfirmPassword").getValue();
+            
+                // Check if the passwords match
+                if (sNewPassword !== sConfirmPassword) {
+                    sap.m.MessageToast.show("Passwords do not match. Please try again.");
+                    return; // Stop further execution if passwords don't match
+                }
+            
+                // Retrieve the resource ID from the login view (assuming it's already in context)
+                var sResourceId = oView.byId("IdResourceInput").getValue();
+            
+                // Prepare the data to update
+                var oDataUpdate = {
+                    Loginfirst: false,  // Indicates the user has logged in before
+                    Password: sNewPassword
+                };
+            
+                // Get the model from the component
+                var oModel = this.getOwnerComponent().getModel();
+            
+                // Update the user's password in the backend
+                try {
+                    await oModel.update(`/RFUISet('${sResourceId}')`, oDataUpdate, {
+                        success: function () {
+                            sap.m.MessageToast.show("Password updated successfully!");
+            
+                            // Navigate to the user menu after successful password update
+                            this.getRouter().navTo("RouteUsermenu", { id: sResourceId });
+                        }.bind(this),
+                        error: function () {
+                            sap.m.MessageToast.show("Error updating user login status.");
+                        }
+                    });
+                } catch (error) {
+                    sap.m.MessageToast.show("An error occurred while updating the password.");
+                }
+            },            
 
         });
     });

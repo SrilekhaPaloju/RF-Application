@@ -356,6 +356,7 @@
                     >
                         <Table
                             id="idUsersInformationTable"
+                            items="{/RFUISet}"
                             mode="MultiSelect"
                             alternateRowColors="true"
                             growingScrollToLoad="true"
@@ -410,35 +411,32 @@
                             </headerToolbar>
                             <columns>
                                 <Column
-                                    id="idEmpIdCol"
-                                    width="15%"
+                                    id="idEmpIdCol"                         
                                 >
                                     <Title
                                         id="idEmpIdTitle"
-                                        text="Resource Id"
+                                       text="ID"
                                     />
                                 </Column>
                                 <Column
                                     id="idEmpNameCol"
-                                    width="20%"
                                 >
                                     <Title
                                         id="idEmpNameTitle"
-                                        text="Resource Name"
+                                        text="Name"
                                     />
                                 </Column>
                                 <Column
-                                    id="idAreaCol"
-                                    width="10%"
+                                    id="idAreaCol"                            
                                 >
                                     <Title
                                         id="idAreaColTitle"
-                                        text="Area"
+                                        text="Pcocesses"
                                     />
                                 </Column>
                                 <Column
                                     id="idGroupCol"
-                                    width="10%"
+                               
                                 >
                                     <Title
                                         id="idGroupTitle"
@@ -446,15 +444,14 @@
                                     />
                                 </Column>
                                 <Column
-                                    id="idResourceTypeCol"
-                                    width="18%"
+                                    id="idResourceTypeCol"                            
                                 >
                                     <Title
                                         id="idResourceTypeTitle"
-                                        text="Resource Type"
+                                        text="Res.Type"
                                     />
                                 </Column>
-                                <Column
+                                <!-- <Column
                                     id="idEmailCol"
                                     width="10%"
                                 >
@@ -462,21 +459,19 @@
                                         id="idEmailTitle"
                                         text="Email"
                                     />
-                                </Column>
+                                </Column> -->
  
                                 <Column
-                                    id="idPhoneNoCol"
-                                    width="15%"
+                                    id="idPhoneNoCol"                                
                                 >
                                     <Title
                                         id="idPhoneNoTitle"
-                                        text="Phone Number"
+                                        text="Ph.No"
                                     />
                                 </Column>
  
                                 <Column
-                                    id="idPasswordCol"
-                                    width="13%"
+                                    id="idPasswordCol"                             
                                 >
                                     <Title
                                         id="idPasswordTitle"
@@ -485,22 +480,20 @@
                                 </Column>
  
                                 <Column
-                                    id="idQueueCol"
-                                    width="10%"
+                                    id="idApproveddateCol"                         
                                 >
                                     <Title
-                                        id="idQueueTitle"
-                                        text="Queue"
+                                        id="idApproveddateTitle"
+                                        text="Approved Date"
                                     />
                                 </Column>
  
                                 <Column
-                                    id="idExpiredDateCol"
-                                    width="15%"
+                                    id="idExpiredDateCol"                             
                                 >
                                     <Title
                                         id="idExpiredDateTitle"
-                                        text="Expired Date"
+                                        text="Exp.Date"
                                     />
                                 </Column>
                             </columns>
@@ -509,46 +502,46 @@
                                     <cells>
                                         <Text
                                             id="idEmpIdValue"
-                                            text=""
+                                            text="{Resourceid}"
                                         />
                                         <Text
                                             id="idEmpNameColValue"
-                                            text=""
+                                            text="{Resourcename}"
                                         />
                                         <Text
                                             id="idAreaColValue"
-                                            text=""
+                                            text="{Area}"
                                         />
                                         <Text
                                             id="idGroupColValue"
-                                            text=""
+                                            text="{Resourcegroup}"
                                         />
                                         <Text
                                             id="idResourceTypeColValue"
-                                            text=""
+                                            text="{Resouecetype}"
                                         />
-                                        <Text
+                                        <!-- <Text
                                             id="idEmailColValue"
-                                            text=""
-                                        />
+                                            text="{Email}"
+                                        /> -->
                                         <Text
                                             id="idPhoneNoColValue"
-                                            text=""
+                                            text="{Phonenumber}"
                                         />
  
                                         <Text
                                             id="idPasswordColValue"
-                                            text=""
+                                            text="{Password}"
                                         />
  
                                         <Text
                                             id="idUserQueueColValue1"
-                                            text=""
+                                            text="{Approveddate}"
                                         />
  
                                         <Text
                                             id="idExpiredDateColValue"
-                                            text=""
+                                            text="{Expirydate}"
                                         />
                                     </cells>
                                 </ColumnListItem>
@@ -595,7 +588,7 @@
                                             id="idButtonAccept"
                                             text="Accept"
                                             type="Accept"
-                                            press="onResetPress"
+                                            press="onApprovePress"
                                         />
  
                                     <Button
@@ -611,7 +604,7 @@
                             <columns>
                                 <Column
                                     id="idRDEmpIdCol"
-                                    width="15%"
+                               
                                 >
                                     <Title
                                         id="idRDEmpIdTitle"
@@ -620,7 +613,7 @@
                                 </Column>
                                 <Column
                                     id="idRDEmpNameCol"
-                                    width="20%"
+                                 
                                 >
                                     <Title
                                         id="idRDEmpNameTitle"
@@ -629,7 +622,6 @@
                                 </Column>
                                 <Column
                                     id="idRDAreaCol"
-                                    width="10%"
                                 >
                                     <Title
                                         id="idRDAreaColTitle"
@@ -638,7 +630,6 @@
                                 </Column>
                                 <Column
                                     id="idRDGroupCol"
-                                    width="10%"
                                 >
                                     <Title
                                         id="idRDGroupTitle"
@@ -647,7 +638,6 @@
                                 </Column>
                                 <Column
                                     id="idRDResourceTypeCol"
-                                    width="18%"
                                 >
                                     <Title
                                         id="idRDResourceTypeTitle"
@@ -656,7 +646,6 @@
                                 </Column>
                                 <Column
                                     id="idRDEmailCol"
-                                    width="10%"
                                 >
                                     <Title
                                         id="idRDEmailTitle"
@@ -666,7 +655,6 @@
  
                                 <Column
                                     id="idRDPhoneNoCol"
-                                    width="15%"
                                 >
                                     <Title
                                         id="idRDPhoneNoTitle"

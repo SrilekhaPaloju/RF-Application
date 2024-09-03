@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/ui/Device",
     "sap/ui/model/json/JSONModel",
     "sap/m/Popover",
@@ -24,7 +24,7 @@ function (Controller,Device,JSONModel,Popover,Button,library,UIComponent) {
                    oModel.loadData(sap.ui.require.toUrl("com/app/rfscreens/model/data.json"));
                    oModel.attachRequestCompleted(function (oEvent) {
                        if (!oEvent.getParameter("success")) {
-                           MessageToast.show("Failed to load data.");
+                           sap.m.MessageToast.show("Failed to load data.");
                        }
                    }.bind(this));
                    oRouter.attachRoutePatternMatched(this.onResourceDetailsLoad, this);
@@ -115,7 +115,7 @@ function (Controller,Device,JSONModel,Popover,Button,library,UIComponent) {
                     // Further actions can be performed here, like navigating to the next view
                 }.bind(this),
                 error: function () {
-                    MessageToast.show("User does not exist");
+                    sap.m.MessageToast.show("User does not exist");
                 }
             });
        

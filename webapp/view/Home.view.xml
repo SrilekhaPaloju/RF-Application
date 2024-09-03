@@ -33,7 +33,7 @@
                         textAlign="Initial"
                     />
                     <Label
-                        id="_IDGenLabel1"
+                        id="_IDResourceID"
                         class="label"
                         text="Resource ID:"
                         textAlign="Initial"
@@ -45,7 +45,7 @@
                         textAlign="Initial"
                     />
                     <Label
-                        id="_IDGenLabel2"
+                        id="_IDPasswordID"
                         class="label"
                         text="Password:"
                         textAlign="Initial"
@@ -82,7 +82,7 @@
                                 press="onResourceLoginBtnPress"
                             />
                             <ToolbarSpacer
-                                id="_IDGenToolbarSpacer1"
+                                id="_IDbuttonseperate"
                                 width="40px"
                             />
                             <!-- Spacer for gap between buttons -->
