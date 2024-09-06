@@ -15,8 +15,8 @@
     "@sap/ux-ui5-tooling": "1",
     "@ui5/cli": "^3.0.0",
     "mbt": "^1.2.27",
-    "ui5-task-zipper": "^3.1.3",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "ui5-task-zipper": "^3.1.3"
   },
   "scripts": {
     "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comapprfscreens-display\"",
@@ -40,5 +40,8 @@
       "ui5-task-zipper",
       "mbt"
     ]
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.3"
   }
 }

@@ -119,13 +119,19 @@ sap.ui.define([
 
                         // Make sure the Group MultiComboBox is visible
                         oGroupMultiComboBox.setVisible(true);
+                        this.getGroupHeader(oGroup);
                     },
                     error: function (oError) {
                         // Handle error if necessary
                         sap.m.MessageToast.show("Failed to fetch data.");
                     }
                 });
-            },
+            },          
+            // getGroupHeader: function (oGroup) {
+            //     return new SeparatorItem( {
+            //         text: oGroup.key
+            //     });
+            // },     
             onSubmitPress: function () {
                 var oUserView = this.getView();
                 var oAreaSelect = this.byId("AreaSelect");
@@ -181,6 +187,15 @@ sap.ui.define([
                     var bValid = true;
                     var bAllFieldsFilled = true;
 
+                    // Validate Email
+                    if (oEmail && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(oEmail)) {
+                        oUserView.byId("idInputEmail").setValueState("Information");
+                        oUserView.byId("idInputEmail").setValueStateText("email pattern should be xyz@gmail.com");
+                        bValid = false;
+                    } else {
+                        oUserView.byId("idInputEmail").setValueState("None");
+                    }
+
                     // Validate fields and set value state and messages
                     if (!sEmployeeID) {
                         oUserView.byId("idEmployeeIDInput").setValueState("Information");
@@ -226,7 +241,6 @@ sap.ui.define([
                     } else {
                         oUserView.byId("idInputPhoneNumber").setValueState("None");
                     }
-
                     if (!bAllFieldsFilled) {
                         sap.m.MessageToast.show("Please fill all mandatory details");
                         return;
@@ -332,26 +346,77 @@ sap.ui.define([
                 var sResourceId = oView.byId("IdResourceInput").getValue();
                 var sPassword = oView.byId("Idpassword").getValue();
 
+                var bValid = true;
+                var bAllFieldsFilled = true;
+
+                if (!sWarehouseNumber) {
+                    oView.byId("idwhInput").setValueState("Information");
+                    oView.byId("idwhInput").setValueStateText("warehouse number is mandatory");
+                    bValid = false;
+                    bAllFieldsFilled = false;
+                } else if (sWarehouseNumber.length !== 4 || !/^\d+$/.test(sWarehouseNumber)) {
+                    oView.byId("idwhInput").setValueState("Information");
+                    oView.byId("idwhInput").setValueStateText("Warehouse number must be a 4-digit Alphanumeric value.");
+                    bValid = false;
+                } else {
+                    oView.byId("idwhInput").setValueState("None");
+                }
+                if (!sResourceId) {
+                    oView.byId("IdResourceInput").setValueState("Information");
+                    oView.byId("IdResourceInput").setValueStateText("ResourceID number is mandatory");
+                    bValid = false;
+                    bAllFieldsFilled = false;
+                } else if (sResourceId.length !== 6) {
+                    oView.byId("IdResourceInput").setValueState("Information");
+                    oView.byId("IdResourceInput").setValueStateText("ResourceID must be a 6-digit numeric value.");
+                    bValid = false;
+                } else {
+                    oView.byId("IdResourceInput").setValueState("None");
+                }
+                if (!sPassword) {
+                    oView.byId("Idpassword").setValueState("Information");
+                    oView.byId("Idpassword").setValueStateText("Password number is mandatory");
+                    bValid = false;
+                    bAllFieldsFilled = false;
+                } else {
+                    oView.byId("Idpassword").setValueState("None");
+                }
+
+                if (!bAllFieldsFilled) {
+                    sap.m.MessageToast.show("Please Enter all mandatory details");
+                    return;
+                }
+                if (!bValid) {
+                    sap.m.MessageToast.show("Please enter correct data");
+                    return;
+                }
+
                 // Get the model from the component
                 var oModel = this.getOwnerComponent().getModel();
                 var that = this;
+                var todayDate = new Date()
+                var today = that.formatDate(todayDate);
                 try {
                     // Make the API call to check if the resource exists
                     await oModel.read("/RFUISet('" + sResourceId + "')", {
                         success: function (oData) {
                             // Check if the password matches
                             if (oData.Password === sPassword) {
-                             
 
                                 // Check if the user is logging in for the first time
                                 if (oData.Loginfirst) {
                                     sap.m.MessageToast.show("Welcome! It seems this is your first login.");
-                                    that.sample();
-                                } else {
-                                 var Id = oData.Resourceid;
-                                 this.getRouter().navTo("RouteUsermenu", { id: Id });
-                                 sap.m.MessageToast.show("Welcome back!");
-                            }
+                                   that.sample();
+
+                                }
+                                else {
+                                    var Id = oData.Resourceid;
+                                    this.getRouter().navTo("RouteUsermenu", { id: Id });
+                                    sap.m.MessageToast.show("Welcome back!");
+                                    oView.byId("idwhInput").setValue();
+                                    oView.byId("IdResourceInput").setValue();
+                                    oView.byId("Idpassword").setValue();
+                                }
                             } else {
                                 // If password doesn't match, show an error message
                                 sap.m.MessageToast.show("Incorrect password.");
@@ -372,44 +437,48 @@ sap.ui.define([
                 }
                 this.oResetDialog.open();
             },
-            onCancelPress:function(){
+            onCancelPress: function () {
                 if (this.oResetDialog.isOpen()) {
                     this.oResetDialog.close()
                 }
             },
             onSavePress: async function () {
                 var oView = this.getView();
-            
+
                 // Retrieve the new password and confirm password from the dialog input fields
                 var sNewPassword = oView.byId("idResetNewPassword").getValue();
                 var sConfirmPassword = oView.byId("idresetConfirmPassword").getValue();
-            
+
                 // Check if the passwords match
                 if (sNewPassword !== sConfirmPassword) {
                     sap.m.MessageToast.show("Passwords do not match. Please try again.");
                     return; // Stop further execution if passwords don't match
                 }
-            
+
                 // Retrieve the resource ID from the login view (assuming it's already in context)
                 var sResourceId = oView.byId("IdResourceInput").getValue();
-            
+
                 // Prepare the data to update
                 var oDataUpdate = {
                     Loginfirst: false,  // Indicates the user has logged in before
                     Password: sNewPassword
                 };
-            
+
                 // Get the model from the component
                 var oModel = this.getOwnerComponent().getModel();
-            
+
                 // Update the user's password in the backend
                 try {
                     await oModel.update(`/RFUISet('${sResourceId}')`, oDataUpdate, {
                         success: function () {
                             sap.m.MessageToast.show("Password updated successfully!");
-            
-                            // Navigate to the user menu after successful password update
-                            this.getRouter().navTo("RouteUsermenu", { id: sResourceId });
+                            oView.byId("idResetNewPassword").setValue();
+                            oView.byId("idresetConfirmPassword").setValue();
+                            this.oResetDialog.close()
+                            oView.byId("idwhInput").setValue();
+                            oView.byId("IdResourceInput").setValue();
+                            oView.byId("Idpassword").setValue();
+
                         }.bind(this),
                         error: function () {
                             sap.m.MessageToast.show("Error updating user login status.");
@@ -418,7 +487,14 @@ sap.ui.define([
                 } catch (error) {
                     sap.m.MessageToast.show("An error occurred while updating the password.");
                 }
-            },            
+            },
+            formatDate: function (oDate) {
+                var sYear = oDate.getFullYear();
+                var sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
+                var sDay = ("0" + oDate.getDate()).slice(-2);
 
+                return `${sYear}-${sMonth}-${sDay}`;
+            },
+        
         });
     });

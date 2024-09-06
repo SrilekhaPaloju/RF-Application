@@ -72,7 +72,7 @@
                 <Input
                     id="idEmployeeIDInput"
                     value="{}"
-                    placeholder="ex:name or 11187"
+                    placeholder="ex:11187"
                     required="true"
                 />
                 <Label
@@ -129,14 +129,18 @@
                 />
                 <MultiComboBox
                     id="GroupSelect"
-                    items="{path: '/AreaSet'}"
                     visible="false"
+                    items="{path: '/AreaSet',
+                    sorter: {
+					path: 'Processarea',
+					group: true
+				},
+				groupHeaderFactory: '.getGroupHeader'}"
                 >
                     <core:Item
-                        class="dropdown"
                         id="_IDGenItem4"
                         key="{Processgroup}"
-                        text="{Processgroup}"
+                        text="{Processarea}"
                     />
                 </MultiComboBox>
                 <Label

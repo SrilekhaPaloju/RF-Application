@@ -59,8 +59,7 @@ function (Controller,Device,JSONModel,Popover,Button,library,UIComponent) {
         },
  
         onResourceDetailsLoad: async function (oEvent1) {
-            debugger;
-       
+
             const { id } = oEvent1.getParameter("arguments");
             this.ID = id;
             console.log(this.ID);
@@ -115,13 +114,12 @@ function (Controller,Device,JSONModel,Popover,Button,library,UIComponent) {
                     // Further actions can be performed here, like navigating to the next view
                 }.bind(this),
                 error: function () {
-                    sap.m.MessageToast.show("User does not exist");
                 }
             });
        
             // Additional code can be placed here if needed
         },
- 
+        
         onSideNavButtonPress: function () {
             var oToolPage = this.byId("toolPage");
             var bSideExpanded = oToolPage.getSideExpanded();
@@ -142,7 +140,11 @@ function (Controller,Device,JSONModel,Popover,Button,library,UIComponent) {
         OnPressHUQuery: function(){
             var oRouter = UIComponent.getRouterFor(this);
             oRouter.navTo("HUQuerypage");
-        }
+        },
+        onReceivingofHUbyBillofLading: function(){
+            var oRouter = UIComponent.getRouterFor(this);
+            oRouter.navTo("Billoflading");
+        },
     });
 });
  

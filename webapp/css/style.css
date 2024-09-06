@@ -75,3 +75,10 @@
   -webkit-backdrop-filter: blur(10px); /* Safari support */
 
 }
+.customLabelSpacing {
+  margin-bottom: 0px; /* Reduce the gap between HBox items */
+}
+
+.customDeliveryLabel, .customItemLabel {
+  margin-right: 5px; /* Adjust spacing between the label and input */
+}

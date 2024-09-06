@@ -1,10 +1,12 @@
-<mvc:View controllerName="com.app.adminscreen.controller.Home"
+<mvc:View
+    controllerName="com.app.adminscreen.controller.Home"
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:tnt="sap.tnt"
     xmlns:core="sap.ui.core"
-    displayBlock="true">
+    displayBlock="true"
+>
     <tnt:ToolPage id="toolPage">
         <tnt:header>
             <tnt:ToolHeader
@@ -24,20 +26,21 @@
                         />
                     </layoutData>
                 </Button>
-                <Image id="_IDGenImage1"
+                <Image
+                    id="_IDGenImage1"
                     height="1.5rem"
                     class="sapUiSmallMarginBegin"
                     src="https://artihcus.com/assets/img/AG-logo.png"
                 />
- 
+
                 <Title
-                    text="RF UI"
+                    text="RFUI"
                     level="H1"
                     id="idPageTitle"
                     width="auto"
                     textAlign="Center"
                 />
- 
+
                 <tnt:ToolHeaderUtilitySeparator
                     id="idToolHeaderUtilitySeparator"
                 />
@@ -50,7 +53,8 @@
                         />
                     </layoutData>
                 </ToolbarSpacer>
-                <Image id="_IDGenImage2"
+                <Image
+                    id="_IDGenImage2"
                     height="1.5rem"
                     class="sapUiSmallMarginBegin"
                     src="https://artihcus.com/assets/img/AG-logo.png"
@@ -62,13 +66,17 @@
                     press=".handleUserNamePress"
                     ariaHasPopup="Menu"
                 />
-                <Avatar id="_IDGenAvatar1"
+                <Avatar
+                    id="_IDGenAvatar1"
                     displaySize="XS"
                     press="onAvatarPressed"
                     tooltip="Profile"
                 >
                     <layoutData>
-                        <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow" />
+                        <OverflowToolbarLayoutData
+                            id="_IDGenOverflowToolbarLayoutData1"
+                            priority="NeverOverflow"
+                        />
                     </layoutData>
                 </Avatar>
             </tnt:ToolHeader>
@@ -128,7 +136,6 @@
                 class="pages"
             >
                 <pages>
-               
                     <ScrollContainer
                         id="page1"
                         horizontal="true"
@@ -152,7 +159,7 @@
                                         text="Resource ID Generation"
                                         class="sapUiSmallMarginTopHeading label"
                                     />
- 
+
                                     <FlexBox
                                         id="_IDField1"
                                         justifyContent="SpaceBetween"
@@ -172,7 +179,7 @@
                                             class="Inputs"
                                         />
                                     </FlexBox>
- 
+
                                     <FlexBox
                                         id="_IDField2"
                                         justifyContent="SpaceBetween"
@@ -192,7 +199,7 @@
                                             class="Inputs"
                                         />
                                     </FlexBox>
- 
+
                                     <FlexBox
                                         id="_IDField33"
                                         justifyContent="SpaceBetween"
@@ -206,7 +213,7 @@
                                             required="true"
                                             class="label"
                                         />
- 
+
                                         <Input
                                             id="idGroupInput"
                                             placeholder="Enter Group"
@@ -226,7 +233,7 @@
                                             required="true"
                                             class="label"
                                         />
- 
+
                                         <Input
                                             id="idNameInput"
                                             placeholder="Enter Name"
@@ -246,7 +253,7 @@
                                             required="true"
                                             class="label"
                                         />
- 
+
                                         <Input
                                             id="idEmailInput"
                                             placeholder="Enter Email"
@@ -266,7 +273,7 @@
                                             required="true"
                                             class="label"
                                         />
- 
+
                                         <Input
                                             id="idPhoneInput"
                                             placeholder="Enter Phone"
@@ -286,15 +293,12 @@
                                             required="true"
                                             class="label"
                                         />
- 
- 
- 
+
                                         <Select
                                             class="Inputs"
                                             id="parkingLotSelect"
                                             width="11rem"
                                             selectedKey=""
-                                    
                                         >
                                             <core:Item
                                                 id="_IDGenItem4"
@@ -303,7 +307,7 @@
                                             />
                                         </Select>
                                     </FlexBox>
- 
+
                                     <FlexBox
                                         id="_IDField6"
                                         justifyContent="Center"
@@ -331,7 +335,7 @@
                                             width="auto"
                                         />
                                     </FlexBox>
- 
+
                                     <Label id="idEmptyRow" />
                                 </VBox>
                             </HBox>
@@ -346,7 +350,7 @@
                             </HBox>
                         </HBox>
                     </ScrollContainer>
- 
+
                     <ScrollContainer
                         id="page2"
                         horizontal="false"
@@ -386,10 +390,10 @@
                                     <Button
                                         id="idBtnCreate"
                                         icon="sap-icon://add"
-                                        text="Add"
+                                        text="mail"
                                         tooltip="Create New User"
                                         type="Success"
-                                        press="onCreateUserBtnPress"
+                                        press="sendemail"
                                     />
                                     <Button
                                         id="idBtnEdit"
@@ -405,47 +409,36 @@
                                         text="Delete"
                                         tooltip="Delete User Info"
                                         type="Reject"
-                                        press="onDeleteUserBtnPress"
+                                        press="onDeleteResBtnPress"
                                     />
                                 </OverflowToolbar>
                             </headerToolbar>
                             <columns>
-                                <Column
-                                    id="idEmpIdCol"                         
-                                >
+                                <Column id="idEmpIdCol">
                                     <Title
                                         id="idEmpIdTitle"
-                                       text="ID"
+                                        text="ID"
                                     />
                                 </Column>
-                                <Column
-                                    id="idEmpNameCol"
-                                >
+                                <Column id="idEmpNameCol">
                                     <Title
                                         id="idEmpNameTitle"
                                         text="Name"
                                     />
                                 </Column>
-                                <Column
-                                    id="idAreaCol"                            
-                                >
+                                <Column id="idAreaCol">
                                     <Title
                                         id="idAreaColTitle"
                                         text="Pcocesses"
                                     />
                                 </Column>
-                                <Column
-                                    id="idGroupCol"
-                               
-                                >
+                                <Column id="idGroupCol">
                                     <Title
                                         id="idGroupTitle"
                                         text="Group"
                                     />
                                 </Column>
-                                <Column
-                                    id="idResourceTypeCol"                            
-                                >
+                                <Column id="idResourceTypeCol">
                                     <Title
                                         id="idResourceTypeTitle"
                                         text="Res.Type"
@@ -460,37 +453,29 @@
                                         text="Email"
                                     />
                                 </Column> -->
- 
-                                <Column
-                                    id="idPhoneNoCol"                                
-                                >
+
+                                <Column id="idPhoneNoCol">
                                     <Title
                                         id="idPhoneNoTitle"
                                         text="Ph.No"
                                     />
                                 </Column>
- 
-                                <Column
-                                    id="idPasswordCol"                             
-                                >
+
+                                <Column id="idPasswordCol">
                                     <Title
                                         id="idPasswordTitle"
                                         text="Password"
                                     />
                                 </Column>
- 
-                                <Column
-                                    id="idApproveddateCol"                         
-                                >
+
+                                <Column id="idApproveddateCol">
                                     <Title
                                         id="idApproveddateTitle"
                                         text="Approved Date"
                                     />
                                 </Column>
- 
-                                <Column
-                                    id="idExpiredDateCol"                             
-                                >
+
+                                <Column id="idExpiredDateCol">
                                     <Title
                                         id="idExpiredDateTitle"
                                         text="Exp.Date"
@@ -528,17 +513,17 @@
                                             id="idPhoneNoColValue"
                                             text="{Phonenumber}"
                                         />
- 
+
                                         <Text
                                             id="idPasswordColValue"
                                             text="{Password}"
                                         />
- 
+
                                         <Text
                                             id="idUserQueueColValue1"
                                             text="{Approveddate}"
                                         />
- 
+
                                         <Text
                                             id="idExpiredDateColValue"
                                             text="{Expirydate}"
@@ -548,8 +533,8 @@
                             </items>
                         </Table>
                     </ScrollContainer>
- 
- <ScrollContainer
+
+                    <ScrollContainer
                         id="page3"
                         horizontal="false"
                         vertical="true"
@@ -584,84 +569,67 @@
                                             />
                                         </layoutData>
                                     </SearchField>
-                                              <Button
-                                            id="idButtonAccept"
-                                            text="Accept"
-                                            type="Accept"
-                                            press="onApprovePress"
-                                        />
- 
+                                    <Button
+                                        id="idButtonAccept"
+                                        text="Accept"
+                                        type="Accept"
+                                        press="onApprovePress"
+                                    />
+
                                     <Button
                                         id="idBtnEdi"
                                         tooltip="Reject"
                                         text="Reject"
                                         type="Reject"
-                                        press="onUpdateUserBtnPress"
+                                        press="onDeleteSelected"
                                     />
                                 </OverflowToolbar>
                             </headerToolbar>
- 
+
                             <columns>
-                                <Column
-                                    id="idRDEmpIdCol"
-                               
-                                >
+                                <Column id="idRDEmpIdCol">
                                     <Title
                                         id="idRDEmpIdTitle"
                                         text="Resource Id"
                                     />
                                 </Column>
-                                <Column
-                                    id="idRDEmpNameCol"
-                                 
-                                >
+                                <Column id="idRDEmpNameCol">
                                     <Title
                                         id="idRDEmpNameTitle"
                                         text="Resource Name"
                                     />
                                 </Column>
-                                <Column
-                                    id="idRDAreaCol"
-                                >
+                                <Column id="idRDAreaCol">
                                     <Title
                                         id="idRDAreaColTitle"
                                         text="Area"
                                     />
                                 </Column>
-                                <Column
-                                    id="idRDGroupCol"
-                                >
+                                <Column id="idRDGroupCol">
                                     <Title
                                         id="idRDGroupTitle"
                                         text="Group"
                                     />
                                 </Column>
-                                <Column
-                                    id="idRDResourceTypeCol"
-                                >
+                                <Column id="idRDResourceTypeCol">
                                     <Title
                                         id="idRDResourceTypeTitle"
                                         text="Resource Type"
                                     />
                                 </Column>
-                                <Column
-                                    id="idRDEmailCol"
-                                >
+                                <Column id="idRDEmailCol">
                                     <Title
                                         id="idRDEmailTitle"
                                         text="Email"
                                     />
                                 </Column>
- 
-                                <Column
-                                    id="idRDPhoneNoCol"
-                                >
+
+                                <Column id="idRDPhoneNoCol">
                                     <Title
                                         id="idRDPhoneNoTitle"
                                         text="Phone Number"
                                     />
                                 </Column>
- 
                             </columns>
                             <items>
                                 <ColumnListItem id="idRDEmpIdColListItem">
@@ -682,7 +650,7 @@
                                             id="idRDGroupColValue"
                                             text="{Resourcegroup}"
                                         />
-                                         <Text
+                                        <Text
                                             id="idRDTypeColValue"
                                             text="{Resouecetype}"
                                         />
@@ -704,4 +672,3 @@
         </tnt:mainContents>
     </tnt:ToolPage>
 </mvc:View>
-

@@ -24,7 +24,7 @@ sap.ui.define([
                 var oTable = this.byId("idRequestDataTable");
                 var oBinding = oTable.getBinding("items");
                 // Create a filter to show only items where Status is true
-                var oStatusFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ,"");
+                var oStatusFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, "");
                 // Apply the filter to the table binding
                 oBinding.filter([oStatusFilter]);
 
@@ -110,9 +110,9 @@ sap.ui.define([
                     var sPath = oContext.getPath();
                     var sResourceType = oContext.getProperty("Resouecetype");// Get the Resource Type (Permanent/Temporary)
 
-                    
+
                     var oExpiryDate = new Date();
-                       // Set the expiry date based on the resource type
+                    // Set the expiry date based on the resource type
                     if (sResourceType === "PermanentEmployee") {
                         oExpiryDate.setFullYear(oExpiryDate.getFullYear() + 1); // 1 year for permanent employees
                     } else if (sResourceType === "temporaryemployee") {
@@ -122,7 +122,7 @@ sap.ui.define([
                     var oCurrentDateTime = new Date();
                     var sFormattedCurrentDateTime = that.formatDate(oCurrentDateTime);
                     var sFormattedExpiryDate = that.formatDate(oExpiryDate);
-            
+
                     var oData = {
                         Notification: "your request has been Approved",
                         Approveddate: sFormattedCurrentDateTime,
@@ -132,21 +132,148 @@ sap.ui.define([
                     };
 
                     oModel.update(sPath, oData, {
-                    success: function () {
-                        sap.m.MessageToast.show("Approved!");
-                    }.bind(this),
-                    error: function () {
-                        sap.m.MessageToast.show("Error updating items.");
-                    }
+                        success: function () {
+                            sap.m.MessageToast.show("Approved!");
+                        }.bind(this),
+                        error: function () {
+                            sap.m.MessageToast.show("Error updating items.");
+                        }
+                    });
                 });
-            });
-        },
-        formatDate: function (oDate) {
-            var sYear = oDate.getFullYear();
-            var sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
-            var sDay = ("0" + oDate.getDate()).slice(-2);
-        
-            return `${sYear}-${sMonth}-${sDay}`;
-        }
+            },
+            formatDate: function (oDate) {
+                var sYear = oDate.getFullYear();
+                var sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
+                var sDay = ("0" + oDate.getDate()).slice(-2);
+
+                return `${sYear}-${sMonth}-${sDay}`;
+            },
+            onDeleteSelected: function () {
+                // Get the table object
+                var oTable = this.byId("idRequestDataTable");
+
+                // Get the selected items
+                var aSelectedItems = oTable.getSelectedItems();
+
+                if (aSelectedItems.length === 0) {
+                    sap.m.MessageToast.show("Please select at least one item to delete.");
+                    return;
+                }
+
+                // Get the model (assuming it's an OData model)
+                var oModel = this.getOwnerComponent().getModel();
+
+                // Loop through the selected items and delete them using oModel.remove
+                aSelectedItems.forEach(function (oSelectedItem) {
+                    var oContext = oSelectedItem.getBindingContext();
+                    var sPath = oContext.getPath();
+
+                    // Perform the delete operation
+                    oModel.remove(sPath, {
+                        success: function () {
+                            sap.m.MessageToast.show("Item deleted successfully.");
+                        },
+                        error: function () {
+                            sap.m.MessageToast.show("Error occurred while deleting the item.");
+                        }
+                    });
+                });
+
+                // Clear the table selection
+                oTable.removeSelections(true);
+            },
+            onDeleteResBtnPress: function () {
+                // Get the table object
+                var oTable = this.byId("idUsersInformationTable");
+
+                // Get the selected items
+                var aSelectedItems = oTable.getSelectedItems();
+
+                if (aSelectedItems.length === 0) {
+                    sap.m.MessageToast.show("Please select at least one item to delete.");
+                    return;
+                }
+
+                // Get the model (assuming it's an OData model)
+                var oModel = this.getOwnerComponent().getModel();
+
+                // Loop through the selected items and delete them using oModel.remove
+                aSelectedItems.forEach(function (oSelectedItem) {
+                    var oContext = oSelectedItem.getBindingContext();
+                    var sPath = oContext.getPath();
+
+                    // Perform the delete operation
+                    oModel.remove(sPath, {
+                        success: function () {
+                            sap.m.MessageToast.show("Resource deleted successfully.");
+                        },
+                        error: function () {
+                            sap.m.MessageToast.show("Error occurred while deleting the item.");
+                        }
+                    });
+                });
+
+                // Clear the table selection
+                oTable.removeSelections(true);
+            },
+            // sendemail:function(){
+            // const sgMail = require('@sendgrid/mail');
+            // sgMail.setApiKey('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');
+
+            // const msg = {
+            //     to: 'sripaloju47@gmail.com',
+            //     from: 'sender@example.com', // Use the email address or domain you verified
+            //     subject: 'Hello from SendGrid',
+            //     text: 'This is a plain text email.',
+            //     html: '<strong>This is an HTML email.</strong>',
+            // };
+
+            // sgMail.send(msg)
+            //     .then(() => {
+            //         console.log('Email sent');
+            //     })
+            //     .catch((error) => {
+            //         console.error(error);
+            //     });
+            // },
+            sendemail: function() {
+                var apiKey = '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';
+                var emailData = {
+                    personalizations: [{
+                        to: [{ email: 'sripaloju47@gmail.com' }],
+                        subject: 'Hello from SendGrid'
+                    }],
+                    from: { email: 'sender@example.com' },
+                    content: [{
+                        type: 'text/plain',
+                        value: 'This is a plain text email.'
+                    }]
+                };
+            
+                // Use fetch API to send the email
+                fetch('https://api.sendgrid.com/v3/mail/send', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + apiKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(emailData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        sap.m.MessageToast.show("Email sent successfully!");
+                    } else {
+                        response.json().then(error => {
+                            console.error('Error sending email:', error);
+                            sap.m.MessageToast.show("Failed to send email.");
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Network error:', error);
+                    sap.m.MessageToast.show("Network error occurred while sending email.");
+                });
+            },            
+
         });
     });

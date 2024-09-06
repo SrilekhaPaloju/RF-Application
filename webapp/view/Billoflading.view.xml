@@ -1,0 +1,732 @@
+<mvc:View
+    controllerName="com.app.rfscreens.controller.Billoflading"
+    xmlns:unified="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:ndc="sap.ndc"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    xmlns:vbm="sap.ui.vbm"
+    xmlns:controls="sap.viz.ui5.controls"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:simple="sap.gantt.simple"
+    xmlns:launchpad="sap.ushell.ui.launchpad"
+    xmlns:uxap="sap.uxap"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+    displayBlock="true"
+    xmlns:tnt="sap.tnt"
+>
+    <Page
+        id="_IDbillofladingpage"
+        showHeader="false"
+        class="PageBackground"
+    >
+        <tnt:ToolHeader
+            id="billofladingToolHeader"
+            visible="true"
+        >
+            <Title
+                text="RFUI"
+                wrapping="false"
+                id="billofladingproductName"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutbilloflading"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Title>
+
+            <Text
+                text="By Artihcus Global"
+                wrapping="false"
+                id="billofladingsecondTitle"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarbilloflading"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Text>
+
+            <ToolbarSpacer id="_IDGenToolbarSpacerbilloflading" />
+
+            <ToolbarSpacer id="billofladingspacer">
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarbilloflading3"
+                        priority="Low"
+                        group="1"
+                    />
+                </layoutData>
+            </ToolbarSpacer>
+
+            <ToolbarSeparator id="_IDGenToolbarSeparatorbilloflading">
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarbilloflading4"
+                        group="2"
+                    />
+                </layoutData>
+            </ToolbarSeparator>
+
+            <tnt:ToolHeaderUtilitySeparator
+                id="_IDGenToolHeaderUtilitySeparatorbilloflading"
+            />
+
+            <ToolbarSpacer
+                id="_IDGenToolbarSpacerbilloflading2"
+                width="1.125rem"
+            />
+
+            <Avatar
+                id="billofladingmyAvatar"
+                src="test-resources/sap/tnt/images/Woman_avatar_01.png"
+                displaySize="XS"
+                press="onAvatarPressed"
+                tooltip="Profile"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarbilloflading5"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Avatar>
+        </tnt:ToolHeader>
+
+        <content>
+            <Button
+                id="_IDGenbackButton1"
+                icon="sap-icon://nav-back"
+                press="Onpressbackbol1"
+                visible="false"
+            />
+            <Button
+                id="_IDGenbackButton2"
+                icon="sap-icon://nav-back"
+                press="Onpressbackbol2"
+                visible="false"
+            />
+            <Button
+                id="_IDGenbackButton3"
+                icon="sap-icon://nav-back"
+                press="Onpressback3"
+                visible="false"
+            />
+            <Button
+                id="_IDGenbackButton4"
+                icon="sap-icon://nav-back"
+                press="Onpressback4"
+                visible="false"
+            />
+            <Button
+                id="_IDGenbackButton5"
+                icon="sap-icon://nav-back"
+                press="Onpressback5"
+                visible="false"
+            />
+
+            <IconTabBar
+                expanded="true"
+                id="billofladingIconTabBar"
+            >
+                <items>
+                    <IconTabFilter
+                        id="billofladingicon1"
+                        visible="true"
+                        key="info"
+                        text="Scanning BOL"
+                    >
+                        <VBox
+                            id="_IDGenVBoxpage1"
+                            alignItems="Center"
+                            justifyContent="Center"
+                            class="centerContent"
+                        >
+                            <f:SimpleForm
+                                id="billofladingsimpleForm"
+                                layout="ResponsiveGridLayout"
+                                editable="true"
+                                class="sapUiResponsiveMargin"
+                                labelSpanL="3"
+                                labelSpanM="3"
+                                emptySpanL="4"
+                                emptySpanM="4"
+                                columnsL="1"
+                                columnsM="1"
+                            >
+                                <HBox
+                                    id="_IDGenHBoxContainerinpage1"
+                                    justifyContent="Start"
+                                    alignItems="Center"
+                                >
+                                    <HBox
+                                        id="_IDGenHBoxContainerinpage"
+                                        alignItems="Center"
+                                        justifyContent="SpaceBetween"
+                                        class="sapUiSmallMarginBottom"
+                                    >
+                                        <!-- Scan HU Label -->
+                                        <Label
+                                            id="_IDbillofladingGenLabel"
+                                            text="Bill Of Lading:"
+                                            class="sapUiTinyMarginEnd"
+                                        />
+                                        <!-- Input Field -->
+                                        <Input
+                                            id="_IDGenInput"
+                                            placeholder="Enter BOL/FO"
+                                            class="sapUiTinyMarginBegin"
+                                            width="12rem"
+                                        />
+                                        <!-- Barcode Scanner Button -->
+                                        <ndc:BarcodeScannerButton
+                                            id="sampleBarcodeScannerButtonZebraOnebilloflading"
+                                            scanSuccess="onScanSuccessOne"
+                                            scanFail="onScanErrorOne"
+                                            inputLiveUpdate="onScanLiveUpdate"
+                                            dialogTitle="Enter HU Number"
+                                            class="sapUiTinyMarginBegin"
+                                        />
+
+                                        <Button
+                                            id="_IDGensubmitButton"
+                                            text="Submit"
+                                            press="OnpressBOLsubmit"
+                                            class="sapUiSmallMarginBegin"
+                                            type="Emphasized"
+                                        />
+                                    </HBox>
+                                </HBox>
+                            </f:SimpleForm>
+                        </VBox>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="billofladingicon2"
+                        visible="false"
+                        key="info1"
+                        text="BOL Details"
+                    >
+                        <f:SimpleForm
+                            id="billofladingsimpleForm1"
+                            layout="ResponsiveGridLayout"
+                            editable="true"
+                            columnsL="2"
+                            columnsM="1"
+                        >
+                            <!-- HU Number Field -->
+                            <Label
+                                id="_IDGenbillofladingLabel"
+                                text="Delivery"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <HBox id="IDdeliverinputhbox">
+                                <Input
+                                    id="_IDGenbillofladingInput"
+                                    maxLength="30"
+                                    width="200px"
+                                />
+
+                                <HBox
+                                    id="_IDitemhbox"
+                                    class="customLabelSpacing"
+                                >
+                                    <Label
+                                        id="_IDGenbillofladingitemLabel"
+                                        text="item:"
+                                        class="sapUiTinyMarginEnd customItemLabel"
+                                    />
+                                    <Input
+                                        id="_IDGenbillofladingitemInput"
+                                        maxLength="30"
+                                        width="200px"
+                                    />
+                                </HBox>
+                            </HBox>
+
+                            <!-- HU Type Field -->
+                            <Label
+                                id="_IDGenLabel"
+                                text="Vendor"
+                            />
+                            <Input
+                                id="_IDHUtypeGenInput3"
+                                maxLength="25"
+                                width="200px"
+                            />
+
+                            <Label
+                                id="_IDGenBolLabelDimensions"
+                                text="No Of HU"
+                                class="sapUiMarginTop margin"
+                            />
+                            <Input
+                                id="_IDHUboltypeGenInput3"
+                                maxLength="25"
+                                width="200px"
+                            />
+
+                            <Label
+                                id="_IDGenBolLabel11"
+                                text="HU"
+                            />
+                            <VBox id="_IDGenBolVBox10">
+                                <Input
+                                    id="_IDGenBolInputMesurement"
+                                    maxLength="13.3"
+                                    width="200px"
+                                />
+
+                                <!-- HU Content and HU Hierarchy Buttons -->
+                                <HBox id="_IDGenBolHBox1">
+                                    <Button
+                                        id="_IDGenBolButton1"
+                                        text="HU List"
+                                        press="onHUListPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                    <Button
+                                        id="_IDGenBolButton2"
+                                        text="New Hu"
+                                        press="onNewhuPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                    <Button
+                                        id="_IDGenBolgrButton2"
+                                        text="GR"
+                                        press="onGrPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </HBox>
+                                <HBox id="_IDGenBolHBox2">
+                                    <Button
+                                        id="_IDGenBolhuchangeButton1"
+                                        text="Hu Change"
+                                        press="onHUListPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                    <Button
+                                        id="_IDGenBolunloadButton2"
+                                        text="Unload"
+                                        press="onUnloadPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                    <Button
+                                        id="_IDGenBolcreatewtButton2"
+                                        text="Create WT"
+                                        press="onCreatewtPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                    <Button
+                                        id="_IDGenBolconfirmwtButton2"
+                                        text="Confirm WT"
+                                        press="onConfirmwtPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </HBox>
+                            </VBox>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="billofladingicon3"
+                        visible="false"
+                        key="info2"
+                        text="HU List"
+                    >
+                        <Table
+                            id="BolHuDetailsTable"
+                            inset="false"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            mode="None"
+                        >
+                            <columns>
+                                <Column
+                                    id="_IDGensnoColumn1"
+                                    width="17%"
+                                >
+                                    <Text
+                                        id="_IDGensnoText1"
+                                        text="S.No"
+                                    />
+                                </Column>
+                                <Column
+                                    id="_IDGenhunoColumn1"
+                                    width="17%"
+                                >
+                                    <Text
+                                        id="_IDGenhunoText1"
+                                        text="HU No"
+                                    />
+                                </Column>
+                                <Column id="_IDGenproductColumn2">
+                                    <Text
+                                        id="_IDGenproductText2"
+                                        text="Product"
+                                    />
+                                </Column>
+                                <Column id="_IDGendesColumn5">
+                                    <Text
+                                        id="_IDGendesText5"
+                                        text="Product Description"
+                                    />
+                                </Column>
+                                <Column id="_IDGenQuanColumn3">
+                                    <Text
+                                        id="_IDGenQuanText3"
+                                        text="Quantity"
+                                    />
+                                </Column>
+                                <Column id="_IDGenuomColumn4">
+                                    <Text
+                                        id="_IDGenuomText4"
+                                        text="UOM"
+                                    />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem id="_IDGenbolColumnListItem1">
+                                    <cells>
+                                        <Text
+                                            id="_IDGensnoText6"
+                                            text="{serialNo}"
+                                        />
+                                        <Text
+                                            id="_IDGenproductText7"
+                                            text="{product}"
+                                        />
+                                        <Text
+                                            id="_IDGenquanText8"
+                                            text="{quantity}"
+                                        />
+                                        <Text
+                                            id="_IDGenuomText9"
+                                            text="{uom}"
+                                        />
+                                        <Text
+                                            id="_IDGendesText10"
+                                            text="{productDescription}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="billofladingicon4"
+                        visible="false"
+                        key="info3"
+                        text="New HU"
+                    >
+                        <f:SimpleForm
+                            id="NewhubillofladingsimpleForm1"
+                            layout="ResponsiveGridLayout"
+                            editable="true"
+                            columnsL="2"
+                            columnsM="1"
+                        >
+                            <Label
+                                id="_IDGenbillofladingLabelnewhu"
+                                text="Product"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Input
+                                id="_IDGenbillofladingInputproduct"
+                                maxLength="30"
+                                width="200px"
+                            />
+                            <Label
+                                id="_IDGenbillofladingLabelQty"
+                                text="Quantity"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <HBox id="IDqtyinputhbox">
+                                <Input
+                                    id="_IDGenbillofladingqtyInput"
+                                    maxLength="30"
+                                    width="100px"
+                                />
+
+                                <HBox
+                                    id="_IDitemhuombox"
+                                    class="customLabelSpacing"
+                                >
+                                    <Label
+                                        id="_IDGenbillofladinguomLabel"
+                                        text="UOM:"
+                                        class="sapUiTinyMarginEnd customItemLabel"
+                                    />
+                                    <Input
+                                        id="_IDGenbillofladinguomInput"
+                                        maxLength="30"
+                                        width="150px"
+                                    />
+                                </HBox>
+                            </HBox>
+
+                            <Label
+                                id="_IDGenLabelPM"
+                                text="Packing Material"
+                            />
+                            <Input
+                                id="_IDHUtypeGenInputPM"
+                                maxLength="25"
+                                width="200px"
+                            />
+
+                            <Label
+                                id="_IDGenBolLabelBatch"
+                                text="Batch"
+                                class="sapUiMarginTop margin"
+                            />
+                            <Input
+                                id="_IDHUbolbatchGenInput"
+                                maxLength="25"
+                                width="200px"
+                            />
+
+                            <Label
+                                id="_IDGenBolLabelbbd"
+                                text="BBD"
+                            />
+                            <Input
+                                id="_IDGenBolInputbbd"
+                                maxLength="13.3"
+                                width="200px"
+                            />
+
+                            <Label
+                                id="_IDGenBolLabelman"
+                                text="Man"
+                            />
+                            <HBox id="idgenmanhbox">
+                                <Input
+                                    id="_IDGenBolInputman"
+                                    maxLength="13.3"
+                                    width="100px"
+                                />
+
+                                <HBox
+                                    id="_IDitemhexpirybox"
+                                    class="customLabelSpacing"
+                                >
+                                    <Label
+                                        id="_IDGenbillofladingExpiryLabel"
+                                        text="Expiry:"
+                                        class="sapUiTinyMarginEnd customItemLabel"
+                                    />
+                                    <Input
+                                        id="_IDGenbillofladingExpiryInput"
+                                        maxLength="30"
+                                        width="150px"
+                                    />
+                                </HBox>
+                            </HBox>
+
+                            <Label
+                                id="_IDGenBolLabelcoo"
+                                text="COO"
+                            />
+                            <VBox id="_IDGenBolVBoxbbd">
+                                <Input
+                                    id="_IDGenBolInputcoo"
+                                    maxLength="13.3"
+                                    width="200px"
+                                />
+                                <HBox id="_IDGenBolnextHBox">
+                                    <Button
+                                        id="_IDGenBolnextButton1"
+                                        text="Next (or) Enter"
+                                        press="oneEnterPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </HBox>
+                            </VBox>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="billofladingicon5"
+                        visible="false"
+                        key="info1"
+                        text="BOL Details"
+                    >
+                        <f:SimpleForm
+                            id="billofladingsimpleFormgr"
+                            layout="ResponsiveGridLayout"
+                            editable="true"
+                            columnsL="2"
+                            columnsM="1"
+                        >
+                            <Label
+                                id="_IDGenhuLabel"
+                                text="HU"
+                            />
+
+                            <Input
+                                id="_IDHUhuGenInput3"
+                                maxLength="25"
+                                width="200px"
+                            />
+                            <Label
+                                id="_IDGenBolLabelDelivery"
+                                text="Delivery"
+                                class="sapUiMarginTop margin"
+                            />
+                            <HBox id="_IDgen">
+                                <Input
+                                    id="_IDHUboldeliveryGenInput3"
+                                    maxLength="25"
+                                    width="100px"
+                                />
+
+                                <HBox id="_IDgenitemhbox">
+                                    <Label
+                                        id="_IDGenBolLabelitem"
+                                        text="item no:"
+                                    />
+
+                                    <Input
+                                        id="_IDGenBolInputitem"
+                                        maxLength="13.3"
+                                        width="100px"
+                                    />
+                                </HBox>
+                            </HBox>
+
+                            <Label id="_IDGenBolLabelEmpty" />
+
+                            <HBox id="idgenhboxgr">
+                                <Button
+                                    id="_IDGenBolgrButton1"
+                                    text="GR"
+                                    press="onGRPress"
+                                    class="sapUiTinyMarginEnd"
+                                />
+
+                                <HBox id="_IDGenBolHBoxgr">
+                                    <Button
+                                        id="_IDGenBolunloadButton"
+                                        text="Unload"
+                                        press="onunloadPress"
+                                        class="sapUiTinyMarginEnd"
+                                    />
+                                </HBox>
+                            </HBox>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+
+                    <IconTabFilter
+                        id="billofladingicon6"
+                        visible="false"
+                        key="info1"
+                        text="GR"
+                    >
+                        <f:SimpleForm
+                            id="billofladingsimpleFormgr1"
+                            layout="ResponsiveGridLayout"
+                            editable="true"
+                            columnsL="2"
+                            columnsM="1"
+                        >
+                            <Label
+                                id="_IDGenhuLabelproduct"
+                                text="Product"
+                            />
+ 
+                            <Input
+                                id="_IDHUproductGenInput3"
+                                maxLength="25"
+                                width="200px"
+                            />
+                            <Label
+                                id="_IDGenBolLabelQty"
+                                text="Delivery"
+                                class="sapUiMarginTop margin"
+                            />
+                            <HBox id="_IDgenqty">
+                                <Input
+                                    id="_IDHUbolqtyGenInput3"
+                                    maxLength="25"
+                                    width="200px"
+                                />
+                            </HBox>
+ 
+                            <Label id="_IDGenBolLabelEmptygr" />
+ 
+                            <HBox id="idgenhboxgr1">
+                                <Button
+                                    id="_IDGenBolgrButton5"
+                                    text="GR"
+                                    press="onGRbuttonPress"
+                                    class="sapUiTinyMarginEnd"
+                                />
+ 
+                            </HBox>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+
+                     <IconTabFilter
+                        id="billofladingicon7"
+                        visible="false"
+                        key="info1"
+                        text="Unload"
+                    >
+                        <f:SimpleForm
+                            id="billofladingsimpleFormunload"
+                            layout="ResponsiveGridLayout"
+                            editable="true"
+                            columnsL="2"
+                            columnsM="1"
+                        >
+                            <Label
+                                id="_IDGenLabelproduct"
+                                text="Product"
+                            />
+ 
+                            <Input
+                                id="_IDproductGenInput3"
+                                maxLength="25"
+                                width="200px"
+                            />
+                            <Label
+                                id="_IDGenBolLabelulQty"
+                                text="Delivery"
+                                class="sapUiMarginTop margin"
+                            />
+                            <HBox id="_IDgenulqty">
+                                <Input
+                                    id="_IDbolqtyulGenInput3"
+                                    maxLength="25"
+                                    width="200px"
+                                />
+                            </HBox>
+ 
+                            <Label id="_IDGenBolLabelEmptyunload" />
+ 
+                            <HBox id="idgenhboxunload">
+                                <Button
+                                    id="_IDGenBolunloadButton5"
+                                    text="Unload"
+                                    press="onUnloadbuttonPress"
+                                    class="sapUiTinyMarginEnd"
+                                />
+ 
+                            </HBox>
+                        </f:SimpleForm>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>
