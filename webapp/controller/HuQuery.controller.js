@@ -6,22 +6,6 @@ sap.ui.define([
 
     return Controller.extend("com.app.rfscreens.controller.HuQuery", {
         onInit: function () {
-            // var oModel = new sap.ui.model.json.JSONModel(sap.ui.require.toUrl("com/app/rfscreens/model/data.json"));
-            // this.getView().setModel(oModel);
-            // var i18nModel = this.getOwnerComponent().getModel("i18n"); 
-            // var oTable = this.byId("HuDetailsTable"); 
-            // var oQuantityHeader = this.byId("_IDGenText3");
-            // var oProductDescriptionHeader = this.byId("_IDGenText5");
-                                             
-            //  if (Device.system.phone) { 
-            //     oQuantityHeader.setText(i18nModel.getResourceBundle().getText("qty"));
-            //     oProductDescriptionHeader.setText(i18nModel.getResourceBundle().getText("pr.des"));
-            //   } 
-            //   else { 
-            //     oQuantityHeader.setText(i18nModel.getResourceBundle().getText("quantity"));
-            //     oProductDescriptionHeader.setText(i18nModel.getResourceBundle().getText("product description"));
-
-            //  }
         },
         onItemSelect: function (oEvent) {
             var oItem = oEvent.getParameter("item");
