@@ -92,6 +92,12 @@
                                 type="Default"
                                 press="onPressSignupBtn"
                             />
+                            <Button
+                                id="InitialScreen"
+                                text="Initial Screen"
+                                type="Default"
+                                press="onPressInitialscreenpBtn"
+                            />
                         </HBox>
                     </VBox>
                 </VBox>

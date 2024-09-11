@@ -1,0 +1,164 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+>
+    <Dialog
+        id="idconnectsapdialog"
+        resizable="false"
+        draggable="true"
+        contentWidth="30%"
+    >
+        <customHeader>
+            <Bar id="_IDBar1coonectsap">
+                <contentMiddle>
+                    <Title
+                        id="_IDTitleconnectsap"
+                        text="System Connection Parameters"
+                    />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        id="_IDButton"
+                        icon="sap-icon://decline"
+                        press="onCloseconnectsap"
+                        tooltip="Close"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <beginButton>
+            <Button
+                id="idconnectsapButton"
+                text="Save"
+                press="onsavePress"
+                class="onsaveBtnsapFragment"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                id="idCancelconnectsapUserButton"
+                text="Clear"
+                press="onClearconnectsapDialog"
+                class="onCancelconnectsapBtn"
+            />
+        </endButton>
+
+        <content>
+            <form:SimpleForm
+                id="idconnecttosapDetailsForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"  
+                labelSpanL="4"
+                labelSpanM="4"
+                labelSpanS="12"
+                emptySpanXL="1"
+                emptySpanL="1"
+                emptySpanM="1"
+                emptySpanS="0"
+                columnsXL="2"    
+                columnsL="2"     
+                columnsM="1"
+            >
+                <!-- Description -->
+                <HBox id="hboxDescription">
+                    <Label
+                        id="idLableDescription"
+                        text="Description:"
+                        width="150px" 
+                    />
+                    <Input
+                        id="idDescriptionInput"
+                        value="{}"
+                        placeholder="Enter Description..."
+                        class="customInput"
+                        width="200px" 
+                    />
+                </HBox>
+
+                <!-- System Id -->
+                <HBox id="hboxSystemId">
+                    <Label
+                        id="idLableSystemId"
+                        text="System Id:"
+                        width="150px" 
+                    />
+                    <Input
+                        id="idSystemIdInput"
+                        value="{}"
+                        placeholder="ID"
+                        maxLength="3"
+                        width="50px" 
+                        
+                    />
+                </HBox>
+
+                <!-- Instance Number -->
+                <HBox id="hboxInstanceNumber">
+                    <Label
+                        id="idLableInstanceNumber"
+                        text="Instance Number:"
+                        width="150px" 
+                    />
+                    <Input
+                        id="idInstanceNumberInput"
+                        value="{}"
+                        placeholder="Num"
+                        maxLength="3"
+                        width="50px" 
+                    />
+                </HBox>
+
+                <!-- Application server -->
+                <HBox id="hboxApplicationServer">
+                    <Label
+                        id="idLableApplicationServer"
+                        text="Application server:"
+                        width="150px" 
+                    />
+                    <Input
+                        id="idApplicationServerInput"
+                        value="{}"
+                        placeholder="Enter Application server..."
+                        class="customInput"
+                        width="200px" 
+                        maxLength="200"
+                    />
+                </HBox>
+
+                <!-- Client -->
+                <HBox id="hboxClient">
+                    <Label
+                        id="idLableClient"
+                        text="Client:"
+                        width="150px" 
+                    />
+                    <Input
+                        id="idClientInput"
+                        value="{}"
+                        placeholder="Client"
+                        maxLength="3"
+                        width="50px" 
+                    />
+                </HBox>
+
+                <!-- Service -->
+                <HBox id="hboxService">
+                    <Label
+                        id="idLableService"
+                        text="Service:"
+                        width="150px" 
+                    />
+                    <Input
+                        id="idServiceInput"
+                        value="{}"
+                        placeholder="Enter Service..."
+                        class="customInput"
+                        width="200px" 
+                    />
+                </HBox>
+            </form:SimpleForm>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

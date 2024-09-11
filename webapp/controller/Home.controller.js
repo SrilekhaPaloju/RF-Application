@@ -495,6 +495,109 @@ sap.ui.define([
 
                 return `${sYear}-${sMonth}-${sDay}`;
             },
-        
+
+                    onSelectGetCode: function () {
+                        var mobileNo = this.byId("idEnterMobileNo").getValue();
+            
+                        // Validate mobile number
+                        if (!mobileNo) {
+                            sap.m.MessageToast.show("Please enter your mobile number.");
+                            return;
+                        }
+                        var oModel = this.getOwnerComponent().getModel();
+                        // Call the OData service to check if the record exists
+                          oModel.read("/RFUISet?$filter=Phonenumber eq '" + mobileNo + "'", {
+                            success: function (data) {
+                                if (data.results.length > 0) {
+                                    var formattedPhoneNumber = "+91" + mobileNo; // Assuming country code for India
+                                    const accountSid = 'AC6d7c190169952f0e1ad0b76962dd835f'; // Replace with your Twilio Account SID
+                                    const authToken = 'b385b3c045fd0b3cdf07b94707307939'; // Replace with your Twilio Auth Token
+                                    const serviceSid = 'VA7efd74dba1f9088e98e44a902b80a313'; // Replace with your Twilio Verify Service SID
+                                    const url = `https://verify.twilio.com/v2/Services/${serviceSid}/Verifications`;
+                    
+                                    // Prepare the data for the request
+                                    const payload = {
+                                        To: formattedPhoneNumber,
+                                        Channel: 'sms'
+                                    };
+                    
+                                    var This = this;
+                    
+                                    // Make the AJAX request to Twilio to send the OTP
+                                    $.ajax({
+                                        url: url,
+                                        type: 'POST',
+                                        headers: {
+                                            'Authorization': 'Basic ' + btoa(accountSid + ':' + authToken),
+                                            'Content-Type': 'application/x-www-form-urlencoded'
+                                        },
+                                        data: $.param(payload),
+                                        success: function (data) {
+                                            console.log('OTP sent successfully:', data);
+                                            sap.m.MessageToast.show('OTP sent successfully! Please check your phone.');
+                                            This.byId("idEnterOtp").setVisible(true);
+                    
+                                            // Store the phone number for later use in OTP verification
+                                            this._storedPhoneNumber = formattedPhoneNumber;
+                    
+                                            // Open the OTP dialog
+                    
+                                        }.bind(this),
+                                        error: function (xhr, status, error) {
+                                            console.error('Error sending OTP:', error);
+                                            sap.m.MessageToast.show('Failed to send OTP: ' + error);
+                                        }
+                                    });
+                                } else {
+                                    MessageToast.show("No record found for this mobile number.");
+                                }
+                            }.bind(this),
+                            error: function () {
+                                MessageToast.show("Error fetching data. Please try again.");
+                            }
+                        });
+                    },
+            
+                    onRegisterforgotDialog: function () {
+                        var enteredOTP = this.byId("idEnterConformationCode").getValue();
+                        var newPassword = this.byId("idEnterNewPassword").getValue();
+                        var confirmPassword = this.byId("idConfirmPassword").getValue();
+            
+                        // Validate OTP
+                        if (enteredOTP != this.generatedOTP) {
+                            MessageToast.show("Invalid OTP. Please try again.");
+                            return;
+                        }
+            
+                        // Validate password
+                        if (newPassword !== confirmPassword) {
+                            MessageToast.show("Passwords do not match.");
+                            return;
+                        }
+            
+                        // Call the OData service to update the password
+                        var payload = {
+                            MobileNo: this.byId("idEnterMobileNo").getValue(),
+                            NewPassword: newPassword
+                        };
+            
+                        this.oModel.update("/YourEntitySet('" + payload.MobileNo + "')", payload, {
+                            success: function () {
+                                MessageToast.show("Password has been reset successfully.");
+                                this.onCloseFP(); // Close the dialog after success
+                            }.bind(this),
+                            error: function () {
+                                MessageToast.show("Error resetting password. Please try again.");
+                            }
+                        });
+                    },
+            
+                    onCloseFP: function () {
+                        // Logic to close the dialog
+                        this.getView().byId("_IddialogForgot").close();
+                    },
+                    onPressInitialscreenpBtn:function(){
+                        this.getOwnerComponent().getRouter().navTo("RouteInitial");
+                    },
         });
     });

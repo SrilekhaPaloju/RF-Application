@@ -9,15 +9,15 @@ sap.ui.define([
         getRouter: function () {
             return this.getOwnerComponent().getRouter();
         },
-        loadFragment: async function (sFragmentName) {
-            const oFragment = await Fragment.load({
-                id: this.getView().getId(),
-                name: `com.app.rfscreens.fragments.${sFragmentName}`,
-                controller: this
-            });
-            this.getView().addDependent(oFragment);
-            return oFragment
-        },
+        // loadFragment: async function (sFragmentName) {
+        //     const oFragment = await Fragment.load({
+        //         id: this.getView().getId(),
+        //         name: `com.app.rfscreens.fragments.${sFragmentName}`,
+        //         controller: this
+        //     });
+        //     this.getView().addDependent(oFragment);
+        //     return oFragment
+        // },
     })
  
 });

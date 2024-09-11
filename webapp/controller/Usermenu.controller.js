@@ -14,13 +14,13 @@ function (Controller,Device,JSONModel,Popover,Button,library,UIComponent) {
     return Controller.extend("com.app.rfscreens.controller.Usermenu", {
         onInit: function () {
             
-            this._setToggleButtonTooltip(!Device.system.desktop);
+            this._setToggleButtonTooltip(!Device.system.desktop);  
             const oRouter = this.getOwnerComponent().getRouter();
                    // Initialize JSON Model
                    var oModel = new JSONModel();
                    this.getView().setModel(oModel);
    
-                   // Load data asynchronously
+                 // Load data asynchronously
                    oModel.loadData(sap.ui.require.toUrl("com/app/rfscreens/model/data.json"));
                    oModel.attachRequestCompleted(function (oEvent) {
                        if (!oEvent.getParameter("success")) {

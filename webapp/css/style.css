@@ -64,16 +64,17 @@
 .boxContainer {
   border-radius: 10px; /* Rounded corners */
   padding-left: 2rem; /* Inner spacing */
-  padding-right: 2rem; 
+  padding-right: 1rem; 
   padding-bottom: 1rem;
-  padding-top: 1rem;
-  margin-left: 10%;
+  padding-top: 0rem;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 10%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
   background-color: rgba(249, 249, 249, 0.3); /* Semi-transparent background color for glass effect */
   backdrop-filter: blur(10px); /* Glass effect with blur */
   -webkit-backdrop-filter: blur(10px); /* Safari support */
-
+  text-align: center; /* Centering text within the container */
 }
 .customLabelSpacing {
   margin-bottom: 0px; /* Reduce the gap between HBox items */
@@ -81,4 +82,7 @@
 
 .customDeliveryLabel, .customItemLabel {
   margin-right: 5px; /* Adjust spacing between the label and input */
+}
+.customInput {
+  margin-top: 14px; /* Adjust as needed */
 }

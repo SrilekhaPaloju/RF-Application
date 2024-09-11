@@ -120,6 +120,13 @@
           "target": [
             "TargetBilloflading"
           ]
+        },
+        {
+          "name": "RouteInitial",
+          "pattern": "Initial",
+          "target": [
+            "TargetInitial"
+          ]
         }
       ],
       "targets": {
@@ -150,6 +157,13 @@
           "clearControlAggregation": false,
           "viewId": "Billoflading",
           "viewName": "Billoflading"
+        },
+        "TargetInitial": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "InitialScreen",
+          "viewName": "InitialScreen"
         }
       }
     },

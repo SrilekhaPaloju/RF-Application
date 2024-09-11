@@ -4,80 +4,73 @@
     xmlns="sap.m"
 >
     <Dialog
-        id="_IddialogReset"
+        id="_Iddialogsaplogon"
         resizable="false"
         draggable="true"
-        title="Reset Password"
+        contentWidth="20%"
     >
         <customHeader>
-            <Bar id="_IDResetBar1">
+            <Bar id="_IDsaplogonBar1">
                 <contentMiddle>
                     <Title
-                        id="_IDResetTitle1"
-                        text="Create New Password"
+                        id="_IDsaplogonTitle1"
+                        text="SAP System Logon"
                     />
                 </contentMiddle>
             </Bar>
         </customHeader>
         <content>
             <form:SimpleForm
-                id="idResetpasswordForm"
+                id="idsaplogonpasswordForm"
                 editable="true"
                 layout="ResponsiveGridLayout"
-                labelSpanXL="3"
                 labelSpanL="3"
                 labelSpanM="3"
-                labelSpanS="12"
-                adjustLabelSpan="false"
-                emptySpanXL="4"
                 emptySpanL="4"
                 emptySpanM="4"
-                emptySpanS="0"
-                columnsXL="1"
                 columnsL="1"
                 columnsM="1"
                 singleContainerFullSize="false"
             >
-                <HBox id="_IDresetGenHBox1">
+                    <Label
+                        id="_IDsaplogonuserlable"
+                        text="User ID"
+                        width="135%"
+                    />
                     <Input
-                        id="idResetNewPassword"
+                        id="idsaplogonNewPassword"
                         value=""
-                        placeholder="Enter New Password"
-                        editable="true"
+                        placeholder="Enter User ID"
+                        required="true"
+                    />
+                    <Label
+                        id="_IDsaplogonpasswordlable"
+                        text="Password"
+                        width="135%"
+                    />
+                    <Input
+                        id="idsaplogonConfirmPassword"
+                        value=""
+                        placeholder="Enter Password"
                         required="true"
                         type="Password"
-                        width="150%"
                     />
-                </HBox>
-                <HBox id="_IDresetGenHBox2">
-                    <Input
-                        id="idresetConfirmPassword"
-                        value=""
-                        placeholder="Confirm Password"
-                        editable="true"
-                        required="true"
-                        type="Password"
-                        width="150%"
-                    />
-                </HBox>
             </form:SimpleForm>
         </content>
         <!-- Add button to the bottom right corner -->
         <endButton>
-              <Button
-                id="idCancelButton"
+            <Button
+                id="idsapCancelButton"
                 text="Cancel"
-                press="onCancelPress"
+                press="onsapCancelPress"
             />
         </endButton>
         <beginButton>
-                  <Button
-                id="idReturnLoginButton"
-                text="Save"
-                press="onSavePress"
+            <Button
+                id="idsapsystemLoginButton"
+                text="submit"
+                press="onsapsubmitPress"
             />
         </beginButton>
     </Dialog>
 </core:FragmentDefinition>
-
-
